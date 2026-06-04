@@ -1,0 +1,42 @@
+---
+name: Princeton University
+description: Princeton University public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/princeton/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      Verified live the Princeton University Art Museum API (open, no-auth REST,
+      objects/search returned 200) and its GitHub-hosted docs. The OIT API Store
+      (ActiveDirectory, PrincetonInfo, MobileApp) is documented but gated behind
+      NetID/service-account OAuth2 and not reachable from the public internet
+      (connection refused). DataSpace exposes an OAI-PMH endpoint that exists but
+      requires auth (401). No fabricated endpoints; gated and dead URLs noted as
+      probed.
+    endpoints:
+      - url: https://data.artmuseum.princeton.edu/objects/32221
+        status: 200
+        note: Art Museum API object-by-id, public no-auth JSON.
+      - url: https://data.artmuseum.princeton.edu/search?q=monet
+        status: 200
+        note: Art Museum API full-text search, public.
+      - url: https://github.com/Princeton-University-Art-Museum/puam-api-docs
+        status: 200
+        note: Official Art Museum API documentation repo.
+      - url: https://api-store.princeton.edu/store/
+        status: 0
+        note: OIT API Store; connection refused externally, campus/auth gated.
+      - url: https://dataspace.princeton.edu/oai/request?verb=Identify
+        status: 401
+        note: DataSpace DSpace OAI-PMH endpoint exists but requires authentication.
+      - url: https://datacommons.princeton.edu/
+        status: 200
+        note: Princeton Data Commons research data repository (successor to DataSpace).
+      - url: https://github.com/pulibrary
+        status: 200
+        note: Princeton University Library GitHub organization (open source).
+      - url: https://www.princeton.edu/
+        status: 200
+        note: Official institutional website.

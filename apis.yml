@@ -1,0 +1,97 @@
+---
+aid: princeton
+name: Princeton University
+description: >-
+  Princeton University is a private Ivy League research university in Princeton,
+  New Jersey, ranked #13 in the QS World University Rankings 2025. Its public
+  developer footprint is modest and centers on the Princeton University Art
+  Museum API, an open, no-authentication REST service for collections data.
+  Most institutional APIs (the OIT API Store covering Active Directory,
+  PrincetonInfo, and the MobileApp course/dining/places data) are gated behind
+  NetID/service-account OAuth2 and campus access. Library and research-data
+  systems expose metadata through standard protocols such as OAI-PMH.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/princeton/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Ivy League
+  - United States
+  - Open Data
+  - Museum
+  - Library
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: princeton:artmuseum
+    name: Princeton University Art Museum API
+    description: >-
+      Open, REST-style API providing developer access to data about the
+      Princeton University Art Museum and its collections. Returns JSON for
+      objects, makers, packages, and full-text search, with IIIF image URIs.
+      No authentication is currently required. Weekly-refreshed static JSON
+      datasets of the full collection are also offered.
+    humanURL: https://github.com/Princeton-University-Art-Museum/puam-api-docs
+    baseURL: https://data.artmuseum.princeton.edu
+    tags: [ Museum, Collections, Open Data, IIIF, JSON ]
+    properties:
+      - type: Documentation
+        url: https://github.com/Princeton-University-Art-Museum/puam-api-docs
+      - type: GitHub
+        url: https://github.com/Princeton-University-Art-Museum
+  - aid: princeton:oit-api-store
+    name: Princeton OIT API Store
+    description: >-
+      Princeton Office of Information Technology API gateway. Default APIs
+      include ActiveDirectory (user/group lookups) and PrincetonInfo
+      (department data); a MobileApp API exposes course, dining, and campus
+      places data. Endpoints are OAuth2-protected and require a NetID or
+      service-account subscription, so access is gated to the campus
+      community rather than the public.
+    humanURL: https://api-store.princeton.edu/store/
+    tags: [ Identity, Directory, Courses, Gated, OAuth2 ]
+    properties:
+      - type: Documentation
+        url: https://api-store.princeton.edu/store/
+      - type: Authentication
+        url: https://api-store.princeton.edu/store/
+  - aid: princeton:dataspace-oai
+    name: DataSpace OAI-PMH
+    description: >-
+      DataSpace is Princeton's DSpace-based digital repository for archiving
+      and disseminating research and academic output. It exposes an OAI-PMH
+      metadata-harvesting endpoint. Content is being migrated to the newer
+      Princeton Data Commons research data repository.
+    humanURL: https://dataspace.princeton.edu/about
+    baseURL: https://dataspace.princeton.edu/oai
+    tags: [ Repository, OAI-PMH, Research Data, Library ]
+    properties:
+      - type: Documentation
+        url: https://dataspace.princeton.edu/about
+common:
+  - type: Website
+    url: https://www.princeton.edu/
+  - type: GitHub
+    url: https://github.com/pulibrary
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/princeton-university/
+  - type: DeveloperPortal
+    url: https://api-store.princeton.edu/store/
+  - type: SourceCode
+    url: https://github.com/Princeton-University-Art-Museum
+  - type: Plans
+    url: plans/princeton-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/princeton-rate-limits.yml
+  - type: FinOps
+    url: finops/princeton-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
