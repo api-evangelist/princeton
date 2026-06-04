@@ -1,0 +1,42 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "princeton": "https://www.princeton.edu/ns#",
+    "puam": "https://data.artmuseum.princeton.edu/ns#",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "sameAs": "schema:sameAs",
+    "Institution": "schema:CollegeOrUniversity",
+    "Museum": "schema:Museum",
+    "Dataset": "schema:Dataset",
+    "CreativeWork": "schema:CreativeWork",
+    "Person": "schema:Person",
+    "objectid": "schema:identifier",
+    "objectnumber": "schema:identifier",
+    "displaytitle": "schema:name",
+    "displaymaker": "schema:creator",
+    "department": "schema:department",
+    "classification": "schema:additionalType",
+    "medium": "schema:artMedium",
+    "dimensions": "schema:size",
+    "creditline": "schema:creditText",
+    "displaydate": "schema:dateCreated",
+    "makers": "schema:creator",
+    "media": "schema:image",
+    "primaryimage": "schema:image",
+    "caption": "schema:caption",
+    "on_view": "puam:onView",
+    "geography": "schema:locationCreated"
+  },
+  "@type": "Institution",
+  "name": "Princeton University",
+  "url": "https://www.princeton.edu/",
+  "description": "Private Ivy League research university in Princeton, New Jersey. Its public developer footprint centers on the Princeton University Art Museum API for collections data.",
+  "sameAs": [
+    "https://github.com/api-evangelist/princeton",
+    "https://github.com/pulibrary",
+    "https://github.com/Princeton-University-Art-Museum",
+    "https://www.linkedin.com/school/princeton-university/"
+  ]
+}
