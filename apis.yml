@@ -74,6 +74,8 @@ apis:
       - type: Documentation
         url: https://dataspace.princeton.edu/about
 common:
+  - type: DomainSecurity
+    url: security/princeton-domain-security.yml
   - type: Website
     url: https://www.princeton.edu/
   - type: GitHub
