@@ -2,102 +2,479 @@
 aid: princeton
 name: Princeton University
 description: >-
-  Princeton University is a private Ivy League research university in Princeton,
-  New Jersey, ranked #13 in the QS World University Rankings 2025. Its public
-  developer footprint is modest and centers on the Princeton University Art
-  Museum API, an open, no-authentication REST service for collections data.
-  Most institutional APIs (the OIT API Store covering Active Directory,
-  PrincetonInfo, and the MobileApp course/dining/places data) are gated behind
-  NetID/service-account OAuth2 and campus access. Library and research-data
-  systems expose metadata through standard protocols such as OAI-PMH.
+  Princeton University is a private Ivy League research university in Princeton, New Jersey.
+  Its programmable footprint is real but almost entirely the work of one unit — Princeton
+  University Library — and it is one of the few institutions in this cohort that operates its
+  own machine-readable contract rather than a vendor's. The Library publishes an OpenAPI 3.1.1
+  document for its Allsearch API at allsearch-api.princeton.edu, serves a Swagger UI alongside
+  it, open-sources the application behind it, and runs a family of unauthenticated Blacklight
+  JSON endpoints across the catalog, digital collections, finding aids, maps and the Princeton
+  Data Commons research-data portal. The Art Museum runs a separate open, no-authentication
+  collections API documented in prose on GitHub. Princeton also operates its own Shibboleth
+  identity provider with published SAML 2.0 metadata, an OAI-PMH 2.0 endpoint on Figgy, and
+  DataCite DOI registration under three of its own repository clients. Everything outside the
+  Library is gated: the OIT enterprise gateway at api.princeton.edu runs WSO2 API Manager behind
+  NetID or service-account OAuth2, and the developer portal that used to front it,
+  api-store.princeton.edu, no longer resolves at all. Course, registrar, dining and directory
+  data exist as APIs but are not reachable by anyone without a Princeton credential, so no
+  public course-catalog surface is claimed here. Princeton's teaching and library-discovery
+  layers are vendor tenancies — Canvas and Ex Libris Alma/Primo — and are recorded as
+  relationships, not as Princeton contracts.
+x-type: university
+x-category: Private Research University
+x-operator-summary:
+  institution: 12
+  tenant: 2
+  vendor: 0
+  placeholder: 0
+x-enrichment:
+  date: '2026-08-19'
+  status: enriched
+  pass: university-pipeline-v1
+  artifacts_added: 16
+  note: >-
+    Re-profiled under the university pipeline after the June 2026 cohort pass. The June profile
+    missed Princeton's only published OpenAPI (the Library's Allsearch API), missed the
+    Shibboleth IdP metadata, missed the Figgy OAI-PMH endpoint and the Princeton Data Commons
+    portal, recorded a DeveloperPortal host that no longer resolves, and misread Princeton's own
+    ALTCHA bot challenge on DataSpace as an authentication requirement. All four are corrected here.
+x-coverage:
+  state: covered
+  reason: null
+  detail: >-
+    Twelve institution-operated surfaces were reached and confirmed with real probes, including a
+    live OpenAPI 3.1.1 document, a SAML 2.0 EntityDescriptor and an OAI-PMH 2.0 Identify response.
+    Two areas were NOT readable and are declared rather than guessed at. First, every Drupal-hosted
+    princeton.edu marketing site — library.princeton.edu, oit.princeton.edu, ai.princeton.edu,
+    researchcomputing.princeton.edu — sits behind a Cloudflare JS interstitial that returns 403 to
+    every non-browser client, including with full browser headers, so no AIPolicy or
+    ResearchComputing pointer is emitted even though those programmes plainly exist. Second,
+    dataspace.princeton.edu answers 401 with Princeton's own in-house ALTCHA proof-of-work
+    challenge; the repository and its OAI-PMH endpoint are live behind it and the June 2026 note
+    calling this "requires authentication" was wrong. Both are blocks on our side, not gaps in
+    Princeton's publishing. The OIT gateway's 401 IS a real institutional gate and is recorded as
+    such. princeton.figshare.com was probed and rejected: a nonsense subdomain returns the same
+    empty 202 from the same load balancer, so there is no Figshare tenancy to record here.
+  evidence:
+  - url: https://allsearch-api.princeton.edu/api-docs/v1/swagger.yaml
+    status: 200
+  - url: https://idp.princeton.edu/idp/shibboleth
+    status: 200
+  - url: https://figgy.princeton.edu/oai?verb=Identify
+    status: 200
+  - url: https://catalog.princeton.edu/catalog.json?q=climate
+    status: 200
+  - url: https://data.artmuseum.princeton.edu/objects/9449
+    status: 200
+  - url: https://api.princeton.edu/active-directory/1.0.6/users
+    status: 401
+  - url: https://api-store.princeton.edu/store/
+    status: 0
+  - url: https://dataspace.princeton.edu/server/oai/request?verb=Identify
+    status: 401
+  - url: https://ai.princeton.edu/
+    status: 403
+  - url: https://library.princeton.edu/
+    status: 403
+  - url: https://allsearch-api.princeton.edu/llms.txt
+    status: 200
+    note: >-
+      FALSE CREDIT, ruled out. The Allsearch API has a catch-all that answers any unknown path
+      with its root identity document, so llms.txt and .well-known/api-catalog both return 200
+      without existing. A control probe of /totally-fake-xyz789 returns the identical body.
+      No agent-surface artifact is claimed for this provider.
+  - url: https://princeton.figshare.com/
+    status: 202
+    note: >-
+      FALSE CREDIT, ruled out. nosuchschool-xyz123.figshare.com returns the same empty 202 from
+      the same awselb/2.0 load balancer. Not a Princeton Figshare tenancy.
+  checked: '2026-08-19'
 type: Index
 accessModel:
   pricing: free
   onboarding: unknown
   trial: false
-  try_now: false
-  public: false
+  try_now: true
+  public: true
   label: Free
-  confidence: medium
+  confidence: high
   source:
-  - plans
-  generated: '2026-07-22'
-  method: derived
-position: Consumer
+  - probed
+  generated: '2026-08-19'
+  method: probed
+  note: >-
+    Upgraded from `public: false` after probing. The Library's APIs are anonymously callable with
+    no key, no registration and no rate-limit challenge; the OIT gateway remains NetID-gated.
+position: Provider
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/princeton.png
 url: https://raw.githubusercontent.com/api-evangelist/princeton/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
+  - Higher Education
+  - Education
   - Ivy League
   - United States
+  - New Jersey
+  - Research Library
+  - Research Data
   - Open Data
+  - Digital Collections
+  - Identity Federation
   - Museum
-  - Library
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 specificationVersion: '0.23'
 apis:
-  - aid: princeton:artmuseum
-    name: Princeton University Art Museum API
+  - aid: princeton:allsearch-api
+    name: Princeton University Library Allsearch API
+    x-operator: institution
     description: >-
-      Open, REST-style API providing developer access to data about the
-      Princeton University Art Museum and its collections. Returns JSON for
-      objects, makers, packages, and full-text search, with IIIF image URIs.
-      No authentication is currently required. Weekly-refreshed static JSON
-      datasets of the full collection are also offered.
+      The backend API for allsearch.princeton.edu, Princeton University Library's federated
+      search. Fourteen operations fan one uniform envelope — number, records, more — across the
+      catalog, articles, the Art Museum, digital collections, finding aids, journals, databases,
+      LibGuides, LibAnswers, maps, library staff, the library website, best bets and a site
+      banner. Public, anonymous, no key. This is the only OpenAPI document Princeton publishes:
+      OpenAPI 3.1.1, served by the application itself at /api-docs/v1/swagger.yaml with a Swagger
+      UI at /api-docs, generated from the application's own request specs and open-sourced as
+      pulibrary/allsearch_api. All fourteen operations carry an operationId, summary, description
+      and tags, and all thirty-two response media types carry an example. It declares no
+      components, no securitySchemes and no root tag definitions, and info.contact is absent.
+      Errors return a named problem code — {"error":{"problem":"QUERY_IS_EMPTY","message":…}}.
+    humanURL: https://allsearch-api.princeton.edu/api-docs
+    baseURL: https://allsearch-api.princeton.edu
+    tags: [ Library, Search, Discovery, Open Data, JSON ]
+    properties:
+      - type: OpenAPI
+        url: openapi/princeton-allsearch-api-openapi.yml
+      - type: APIReference
+        url: https://allsearch-api.princeton.edu/api-docs
+      - type: Documentation
+        url: https://github.com/pulibrary/allsearch_api
+      - type: GitHubRepository
+        url: https://github.com/pulibrary/allsearch_api
+      - type: JSONSchema
+        url: json-schema/princeton-allsearch-search-response.json
+      - type: JSONSchema
+        url: json-schema/princeton-allsearch-error.json
+      - type: Examples
+        url: examples/princeton-allsearch-catalog-search-200.json
+      - type: Authentication
+        url: authentication/princeton-authentication.yml
+      - type: ErrorCatalog
+        url: errors/princeton-errors.yml
+      - type: SpectralRules
+        url: rules/princeton-openapi-spectral-rules.yml
+      - type: Conformance
+        url: conformance/princeton-conformance.yml
+      - type: Website
+        url: https://allsearch.princeton.edu/
+  - aid: princeton:art-museum-api
+    name: Princeton University Art Museum API
+    x-operator: institution
+    description: >-
+      Open, REST-style API providing developer access to data about the Princeton University Art
+      Museum and its collections. Four surfaces: objects (with a label-level /tombstone
+      sub-resource and filtering by maker, department, term and on-view status), makers,
+      packages, and a full-text search endpoint that returns the raw Elasticsearch envelope.
+      Pagination and incremental harvesting are supported via size, from, sort, sortorder and
+      lastupdated. No authentication is currently required, though the Museum documents that this
+      may change. Weekly-refreshed static JSON dumps of the whole collection are offered
+      alongside the API for bulk and machine-learning use. The Museum publishes prose
+      documentation, not a contract; the OpenAPI in this repo is DERIVED from that documentation
+      and verified against live responses, and is not Princeton's own artifact.
     humanURL: https://github.com/Princeton-University-Art-Museum/puam-api-docs
     baseURL: https://data.artmuseum.princeton.edu
     tags: [ Museum, Collections, Open Data, IIIF, JSON ]
     properties:
+      - type: OpenAPI
+        url: openapi/princeton-art-museum-api-openapi.yml
       - type: Documentation
         url: https://github.com/Princeton-University-Art-Museum/puam-api-docs
-      - type: GitHub
+      - type: GitHubOrganization
         url: https://github.com/Princeton-University-Art-Museum
-  - aid: princeton:oit-api-store
-    name: Princeton OIT API Store
-    description: >-
-      Princeton Office of Information Technology API gateway. Default APIs
-      include ActiveDirectory (user/group lookups) and PrincetonInfo
-      (department data); a MobileApp API exposes course, dining, and campus
-      places data. Endpoints are OAuth2-protected and require a NetID or
-      service-account subscription, so access is gated to the campus
-      community rather than the public.
-    humanURL: https://api-store.princeton.edu/store/
-    tags: [ Identity, Directory, Courses, Gated, OAuth2 ]
-    properties:
-      - type: Documentation
-        url: https://api-store.princeton.edu/store/
+      - type: JSONSchema
+        url: json-schema/princeton-art-museum-object.json
+      - type: Examples
+        url: examples/princeton-art-museum-tombstone-200.json
       - type: Authentication
-        url: https://api-store.princeton.edu/store/
-  - aid: princeton:dataspace-oai
-    name: DataSpace OAI-PMH
+        url: authentication/princeton-authentication.yml
+      - type: ErrorCatalog
+        url: errors/princeton-errors.yml
+  - aid: princeton:oit-api-gateway
+    name: Princeton OIT API Gateway
+    x-operator: institution
     description: >-
-      DataSpace is Princeton's DSpace-based digital repository for archiving
-      and disseminating research and academic output. It exposes an OAI-PMH
-      metadata-harvesting endpoint. Content is being migrated to the newer
-      Princeton Data Commons research data repository.
-    humanURL: https://dataspace.princeton.edu/about
-    baseURL: https://dataspace.princeton.edu/oai
-    tags: [ Repository, OAI-PMH, Research Data, Library ]
+      Princeton's Office of Information Technology enterprise API gateway, running WSO2 API
+      Manager. Fronts institutional APIs — ActiveDirectory user and group lookups, PrincetonInfo
+      departmental data, a MobileApp surface carrying course, dining and campus places data, and
+      the LibAlma patron feed the Library consumes. Every call requires a bearer token obtained
+      through a NetID or departmental service-account subscription, so the surface is real but
+      invisible to the public: anonymous requests return 401 with an empty body. The API Store
+      developer portal that used to front it, api-store.princeton.edu, no longer resolves
+      (NXDOMAIN, 2026-08-19), and no successor portal is published, so the gateway currently has
+      no discoverable documentation of any kind. This is the course-catalog and registrar surface
+      the university pipeline hunts for — it exists, and it is closed.
+    baseURL: https://api.princeton.edu
+    tags: [ Identity, Directory, Courses, Gated, OAuth2, Gateway ]
+    properties:
+      - type: Authentication
+        url: authentication/princeton-authentication.yml
+      - type: ErrorCatalog
+        url: errors/princeton-errors.yml
+      - type: Lifecycle
+        url: lifecycle/princeton-lifecycle.yml
+  - aid: princeton:catalog
+    name: Princeton University Library Catalog (Orangelight)
+    x-operator: institution
+    description: >-
+      Princeton's library catalog at catalog.princeton.edu, a Blacklight application the Library
+      writes and maintains itself as pulibrary/orangelight. Every route answers to a .json
+      suffix, so catalog.princeton.edu/catalog.json is an unauthenticated search API returning a
+      JSON:API-shaped envelope with self/next/last/prev links, facets and full record documents.
+      Records carry Alma MMS IDs; the underlying library system is an Ex Libris tenancy, but this
+      contract and this application are Princeton's own code.
+    humanURL: https://catalog.princeton.edu/
+    baseURL: https://catalog.princeton.edu
+    tags: [ Library, Catalog, Discovery, Blacklight, JSON ]
     properties:
       - type: Documentation
-        url: https://dataspace.princeton.edu/about
+        url: https://github.com/pulibrary/orangelight
+      - type: GitHubRepository
+        url: https://github.com/pulibrary/orangelight
+      - type: Website
+        url: https://catalog.princeton.edu/
+  - aid: princeton:bibdata
+    name: PUL Bibliographic Data Web Service (Bibdata)
+    x-operator: institution
+    description: >-
+      Princeton University Library's own bibliographic data service at bibdata.princeton.edu.
+      A Rails application (pulibrary/bibdata) that reads from Alma and re-serves bibliographic
+      records, holdings, delivery and holding locations, libraries and events as JSON, plus
+      periodic full dumps used to rebuild the Solr indexes behind the catalog. Location endpoints
+      such as /locations/libraries.json are anonymously readable; staff operations sit behind
+      Princeton CAS. The service prints its own deployed commit, deploy date and live index
+      timestamps on its home page — more operational transparency than most of this cohort offers.
+    humanURL: https://bibdata.princeton.edu/
+    baseURL: https://bibdata.princeton.edu
+    tags: [ Library, Metadata, JSON, Open Data ]
+    properties:
+      - type: Documentation
+        url: https://github.com/pulibrary/bibdata
+      - type: GitHubRepository
+        url: https://github.com/pulibrary/bibdata
+      - type: Website
+        url: https://bibdata.princeton.edu/
+  - aid: princeton:figgy-oai
+    name: Figgy Digital Repository — OAI-PMH and IIIF
+    x-operator: institution
+    description: >-
+      Figgy is Princeton University Library's Valkyrie-based digital repository backend
+      (pulibrary/figgy). It serves IIIF manifests for digitised material and exposes an OAI-PMH
+      2.0 metadata-harvesting endpoint at /oai whose Identify response names "Princeton
+      University Library", with an earliest datestamp of 2017-10-06 and transient deleted-record
+      support. This is Princeton's verified oai-pmh conformance under the education regime, and
+      unlike most of the cohort the endpoint is on the institution's own host running the
+      institution's own code.
+    humanURL: https://figgy.princeton.edu/
+    baseURL: https://figgy.princeton.edu/oai
+    tags: [ Repository, OAI-PMH, IIIF, Digital Collections, Library ]
+    properties:
+      - type: Documentation
+        url: https://github.com/pulibrary/figgy
+      - type: GitHubRepository
+        url: https://github.com/pulibrary/figgy
+      - type: Examples
+        url: examples/princeton-figgy-oai-identify.xml
+      - type: Conformance
+        url: conformance/princeton-conformance.yml
+  - aid: princeton:data-commons
+    name: Princeton Data Commons — Discovery
+    x-operator: institution
+    description: >-
+      Princeton's research data repository, split into pdc_describe for deposit and description
+      and pdc_discovery for the public portal at datacommons.princeton.edu/discovery. Both are
+      Princeton-written (pulibrary/pdc_discovery, pulibrary/pdc_describe), and the discovery
+      portal exposes an unauthenticated Blacklight JSON API. Datasets are addressed by DataCite
+      DOIs under Princeton's own 10.34770 prefix and records carry ORCID identifiers. This is the
+      slot most universities in this cohort fill with a Figshare or Dataverse tenancy; Princeton
+      operates it themselves.
+    humanURL: https://datacommons.princeton.edu/discovery
+    baseURL: https://datacommons.princeton.edu/discovery
+    tags: [ Research Data, Repository, DataCite, ORCID, Open Data ]
+    properties:
+      - type: Documentation
+        url: https://github.com/pulibrary/pdc_discovery
+      - type: GitHubRepository
+        url: https://github.com/pulibrary/pdc_discovery
+      - type: Conformance
+        url: conformance/princeton-conformance.yml
+      - type: Website
+        url: https://datacommons.princeton.edu/discovery
+  - aid: princeton:dataspace-oai
+    name: DataSpace Institutional Repository — OAI-PMH
+    x-operator: institution
+    description: >-
+      DataSpace is Princeton's older DSpace-based institutional repository for theses,
+      dissertations and archived research output, with an OAI-PMH metadata-harvesting endpoint
+      and content migrating to Princeton Data Commons. Registered with DataCite as client
+      pu.dataspace, which has minted 399 DOIs under the 10.34770 prefix. The host CNAMEs to
+      dataspace.pulcloud.io — pulcloud.io is Princeton University Library's own Google Cloud
+      estate, documented throughout pulibrary/princeton_ansible — so this is Princeton
+      infrastructure running open-source software, not a hosted vendor tenancy. Every request
+      currently returns 401 from Princeton's in-house ALTCHA proof-of-work bot challenge
+      (pulibrary/altcha_rust_server); that is a client-verification gate, not authentication, and
+      the June 2026 profile of this repo recorded it wrongly.
+    humanURL: https://dataspace.princeton.edu/about
+    baseURL: https://dataspace.princeton.edu/server/oai/request
+    tags: [ Repository, OAI-PMH, DSpace, Research Data, Theses ]
+    properties:
+      - type: Conformance
+        url: conformance/princeton-conformance.yml
+      - type: Lifecycle
+        url: lifecycle/princeton-lifecycle.yml
+  - aid: princeton:finding-aids
+    name: Princeton University Library Finding Aids (PULFAlight)
+    x-operator: institution
+    description: >-
+      Archival finding aids for Princeton's special collections and the Mudd Manuscript Library,
+      served by an ArcLight application the Library maintains as pulibrary/pulfalight. The
+      Blacklight .json surface returns collection and component records with facets and paging
+      links, anonymously.
+    humanURL: https://findingaids.princeton.edu/
+    baseURL: https://findingaids.princeton.edu
+    tags: [ Library, Archives, Finding Aids, Discovery, JSON ]
+    properties:
+      - type: GitHubRepository
+        url: https://github.com/pulibrary/pulfalight
+      - type: Website
+        url: https://findingaids.princeton.edu/
+  - aid: princeton:maps
+    name: Princeton University Library Maps and Geospatial Data (PUL Map)
+    x-operator: institution
+    description: >-
+      GeoBlacklight application at maps.princeton.edu (pulibrary/pulmap) serving Princeton's
+      geospatial data catalog. The .json surface is anonymously readable and the records follow
+      the OpenGeoMetadata conventions GeoBlacklight is built around.
+    humanURL: https://maps.princeton.edu/
+    baseURL: https://maps.princeton.edu
+    tags: [ Library, Geospatial, Open Data, Discovery, JSON ]
+    properties:
+      - type: GitHubRepository
+        url: https://github.com/pulibrary/pulmap
+      - type: Website
+        url: https://maps.princeton.edu/
+  - aid: princeton:digital-pul
+    name: Digital PUL (DPUL)
+    x-operator: institution
+    description: >-
+      Princeton's public digital collections site at dpul.princeton.edu (pulibrary/dpul), the
+      presentation layer over Figgy. Blacklight .json endpoints return collection and item
+      records anonymously; the same content is also reachable through Allsearch's /search/dpul
+      operation.
+    humanURL: https://dpul.princeton.edu/
+    baseURL: https://dpul.princeton.edu
+    tags: [ Digital Collections, Library, Discovery, JSON ]
+    properties:
+      - type: GitHubRepository
+        url: https://github.com/pulibrary/dpul
+      - type: Website
+        url: https://dpul.princeton.edu/
+  - aid: princeton:shibboleth-idp
+    name: Princeton Shibboleth Identity Provider — SAML 2.0 Metadata
+    x-operator: institution
+    description: >-
+      Princeton's campus identity provider publishes signed SAML 2.0 metadata at
+      idp.princeton.edu/idp/shibboleth. The EntityDescriptor names Princeton University, carries
+      administrative, support and technical contacts at princeton.edu, declares
+      protocolSupportEnumeration for Shibboleth 1.0, SAML 1.1 and SAML 2.0, and publishes signing
+      and encryption key descriptors plus shibmd:Scope elements. This is a machine-readable
+      contract that is institution-operated by definition, it is the university pipeline's
+      IdentityFederation class, and it is Princeton's verified shibboleth and saml conformance
+      under the education regime. It is also almost never catalogued anywhere.
+    humanURL: https://idp.princeton.edu/idp/shibboleth
+    baseURL: https://idp.princeton.edu/idp
+    tags: [ Identity Federation, Shibboleth, SAML, InCommon, Authentication ]
+    properties:
+      - type: Examples
+        url: examples/princeton-shibboleth-idp-metadata.xml
+      - type: Conformance
+        url: conformance/princeton-conformance.yml
+      - type: Authentication
+        url: authentication/princeton-authentication.yml
+  - aid: princeton:exlibris-tenancy
+    name: Ex Libris Alma / Primo VE — Princeton tenancy (01PRI_INST)
+    x-operator: tenant
+    description: >-
+      Princeton's library management and discovery layer runs on Ex Libris, with institution code
+      01PRI_INST: Alma at na05.alma.exlibrisgroup.com and a Primo VE instance at
+      princeton.primo.exlibrisgroup.com. Both returned 200. The data is Princeton's — its
+      holdings, its patrons, its link resolver targets, which surface in Allsearch results as
+      resource_url values — but the API contract belongs to Ex Libris and is scored against Ex
+      Libris, not Princeton. Recorded as a relationship because it is a real institutional fact
+      and because Princeton's own bibdata service is built on top of it. No vendor spec is saved
+      under this slug.
+    humanURL: https://princeton.primo.exlibrisgroup.com/
+    tags: [ Library, Vendor Tenancy, Discovery, Ex Libris ]
+    properties:
+      - type: Website
+        url: https://princeton.primo.exlibrisgroup.com/
+  - aid: princeton:canvas-tenancy
+    name: Canvas LMS — Princeton tenancy
+    x-operator: tenant
+    description: >-
+      Princeton's learning management system is Instructure Canvas at princeton.instructure.com.
+      The host is live behind a Cloudflare interstitial (403 to non-browser clients). Any Canvas
+      REST API, LTI conformance or Caliper eventing available there is Instructure's contract
+      running under Princeton's name, not Princeton engineering, so nothing is saved under this
+      slug. Recorded because the LMS tenancy is the single most consequential programmable
+      relationship a university has and leaving it out would misrepresent the footprint.
+    humanURL: https://princeton.instructure.com/
+    tags: [ LMS, Vendor Tenancy, Teaching, Canvas ]
+    properties:
+      - type: Website
+        url: https://princeton.instructure.com/
 common:
-  - type: DomainSecurity
-    url: security/princeton-domain-security.yml
   - type: Website
     url: https://www.princeton.edu/
-  - type: GitHub
+  - type: GitHubOrganization
     url: https://github.com/pulibrary
+  - type: GitHubOrganization
+    url: https://github.com/PrincetonUniversity
+  - type: GitHubOrganization
+    url: https://github.com/Princeton-University-Art-Museum
   - type: LinkedIn
     url: https://www.linkedin.com/school/princeton-university/
-  - type: DeveloperPortal
-    url: https://api-store.princeton.edu/store/
-  - type: SourceCode
-    url: https://github.com/Princeton-University-Art-Museum
+  - type: PrivacyPolicy
+    url: https://www.princeton.edu/privacy-notice
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: LibraryCatalog
+    url: https://catalog.princeton.edu/
+  - type: ResearchRepository
+    url: https://datacommons.princeton.edu/discovery
+  - type: IdentityFederation
+    url: https://idp.princeton.edu/idp/shibboleth
+  - type: OpenData
+    url: https://maps.princeton.edu/
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: Vocabulary
+    url: vocabulary/princeton-vocabulary.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Scopes
+    url: scopes/princeton-scopes.yml
+  - type: Lifecycle
+    url: lifecycle/princeton-lifecycle.yml
+  - type: JSONLD
+    url: json-ld/princeton-context.jsonld
+  - type: DomainSecurity
+    url: security/princeton-domain-security.yml
   - type: Plans
     url: plans/princeton-plans-pricing.yml
   - type: RateLimits
