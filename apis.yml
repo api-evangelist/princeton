@@ -185,7 +185,18 @@ apis:
       and verified against live responses, and is not Princeton's own artifact.
     humanURL: https://github.com/Princeton-University-Art-Museum/puam-api-docs
     baseURL: https://data.artmuseum.princeton.edu
-    tags: [ Museum, Collections, Open Data, IIIF, JSON ]
+    tags:
+    - Museum
+    - Collection
+    - Open Data
+    - IIIF
+    - JSON
+    tags_raw:
+    - Museum
+    - Collections
+    - Open Data
+    - IIIF
+    - JSON
     properties:
       - type: OpenAPI
         url: openapi/princeton-art-museum-api-openapi.yml
@@ -216,7 +227,20 @@ apis:
       no discoverable documentation of any kind. This is the course-catalog and registrar surface
       the university pipeline hunts for — it exists, and it is closed.
     baseURL: https://api.princeton.edu
-    tags: [ Identity, Directory, Courses, Gated, OAuth2, Gateway ]
+    tags:
+    - Identity
+    - Directory
+    - Courses
+    - Gated
+    - Authentication
+    - Gateway
+    tags_raw:
+    - Identity
+    - Directory
+    - Courses
+    - Gated
+    - OAuth2
+    - Gateway
     properties:
       - type: Authentication
         url: authentication/princeton-authentication.yml
