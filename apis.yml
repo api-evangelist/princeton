@@ -126,338 +126,881 @@ created: '2026-06-03'
 modified: '2026-08-19'
 specificationVersion: '0.23'
 apis:
-  - aid: princeton:allsearch-api
-    name: Princeton University Library Allsearch API
-    x-operator: institution
-    description: >-
-      The backend API for allsearch.princeton.edu, Princeton University Library's federated
-      search. Fourteen operations fan one uniform envelope — number, records, more — across the
-      catalog, articles, the Art Museum, digital collections, finding aids, journals, databases,
-      LibGuides, LibAnswers, maps, library staff, the library website, best bets and a site
-      banner. Public, anonymous, no key. This is the only OpenAPI document Princeton publishes:
-      OpenAPI 3.1.1, served by the application itself at /api-docs/v1/swagger.yaml with a Swagger
-      UI at /api-docs, generated from the application's own request specs and open-sourced as
-      pulibrary/allsearch_api. All fourteen operations carry an operationId, summary, description
-      and tags, and all thirty-two response media types carry an example. It declares no
-      components, no securitySchemes and no root tag definitions, and info.contact is absent.
-      Errors return a named problem code — {"error":{"problem":"QUERY_IS_EMPTY","message":…}}.
-    humanURL: https://allsearch-api.princeton.edu/api-docs
-    baseURL: https://allsearch-api.princeton.edu
-    tags: [ Library, Search, Discovery, Open Data, JSON ]
-    properties:
-      - type: OpenAPI
-        url: openapi/princeton-allsearch-api-openapi.yml
-      - type: APIReference
-        url: https://allsearch-api.princeton.edu/api-docs
-      - type: Documentation
-        url: https://github.com/pulibrary/allsearch_api
-      - type: GitHubRepository
-        url: https://github.com/pulibrary/allsearch_api
-      - type: JSONSchema
-        url: json-schema/princeton-allsearch-search-response.json
-      - type: JSONSchema
-        url: json-schema/princeton-allsearch-error.json
-      - type: Examples
-        url: examples/princeton-allsearch-catalog-search-200.json
-      - type: Authentication
-        url: authentication/princeton-authentication.yml
-      - type: ErrorCatalog
-        url: errors/princeton-errors.yml
-      - type: SpectralRules
-        url: rules/princeton-openapi-spectral-rules.yml
-      - type: Conformance
-        url: conformance/princeton-conformance.yml
-      - type: Website
-        url: https://allsearch.princeton.edu/
-  - aid: princeton:art-museum-api
-    name: Princeton University Art Museum API
-    x-operator: institution
-    description: >-
-      Open, REST-style API providing developer access to data about the Princeton University Art
-      Museum and its collections. Four surfaces: objects (with a label-level /tombstone
-      sub-resource and filtering by maker, department, term and on-view status), makers,
-      packages, and a full-text search endpoint that returns the raw Elasticsearch envelope.
-      Pagination and incremental harvesting are supported via size, from, sort, sortorder and
-      lastupdated. No authentication is currently required, though the Museum documents that this
-      may change. Weekly-refreshed static JSON dumps of the whole collection are offered
-      alongside the API for bulk and machine-learning use. The Museum publishes prose
-      documentation, not a contract; the OpenAPI in this repo is DERIVED from that documentation
-      and verified against live responses, and is not Princeton's own artifact.
-    humanURL: https://github.com/Princeton-University-Art-Museum/puam-api-docs
-    baseURL: https://data.artmuseum.princeton.edu
-    tags:
-    - Museum
-    - Collection
-    - Open Data
-    - IIIF
-    - JSON
-    tags_raw:
-    - Museum
-    - Collections
-    - Open Data
-    - IIIF
-    - JSON
-    properties:
-      - type: OpenAPI
-        url: openapi/princeton-art-museum-api-openapi.yml
-      - type: Documentation
-        url: https://github.com/Princeton-University-Art-Museum/puam-api-docs
-      - type: GitHubOrganization
-        url: https://github.com/Princeton-University-Art-Museum
-      - type: JSONSchema
-        url: json-schema/princeton-art-museum-object.json
-      - type: Examples
-        url: examples/princeton-art-museum-tombstone-200.json
-      - type: Authentication
-        url: authentication/princeton-authentication.yml
-      - type: ErrorCatalog
-        url: errors/princeton-errors.yml
-  - aid: princeton:oit-api-gateway
-    name: Princeton OIT API Gateway
-    x-operator: institution
-    description: >-
-      Princeton's Office of Information Technology enterprise API gateway, running WSO2 API
-      Manager. Fronts institutional APIs — ActiveDirectory user and group lookups, PrincetonInfo
-      departmental data, a MobileApp surface carrying course, dining and campus places data, and
-      the LibAlma patron feed the Library consumes. Every call requires a bearer token obtained
-      through a NetID or departmental service-account subscription, so the surface is real but
-      invisible to the public: anonymous requests return 401 with an empty body. The API Store
-      developer portal that used to front it, api-store.princeton.edu, no longer resolves
-      (NXDOMAIN, 2026-08-19), and no successor portal is published, so the gateway currently has
-      no discoverable documentation of any kind. This is the course-catalog and registrar surface
-      the university pipeline hunts for — it exists, and it is closed.
-    baseURL: https://api.princeton.edu
-    tags:
-    - Identity
-    - Directory
-    - Courses
-    - Gated
-    - Authentication
-    - Gateway
-    tags_raw:
-    - Identity
-    - Directory
-    - Courses
-    - Gated
-    - OAuth2
-    - Gateway
-    properties:
-      - type: Authentication
-        url: authentication/princeton-authentication.yml
-      - type: ErrorCatalog
-        url: errors/princeton-errors.yml
-      - type: Lifecycle
-        url: lifecycle/princeton-lifecycle.yml
-  - aid: princeton:catalog
-    name: Princeton University Library Catalog (Orangelight)
-    x-operator: institution
-    description: >-
-      Princeton's library catalog at catalog.princeton.edu, a Blacklight application the Library
-      writes and maintains itself as pulibrary/orangelight. Every route answers to a .json
-      suffix, so catalog.princeton.edu/catalog.json is an unauthenticated search API returning a
-      JSON:API-shaped envelope with self/next/last/prev links, facets and full record documents.
-      Records carry Alma MMS IDs; the underlying library system is an Ex Libris tenancy, but this
-      contract and this application are Princeton's own code.
-    humanURL: https://catalog.princeton.edu/
-    baseURL: https://catalog.princeton.edu
-    tags: [ Library, Catalog, Discovery, Blacklight, JSON ]
-    properties:
-      - type: Documentation
-        url: https://github.com/pulibrary/orangelight
-      - type: GitHubRepository
-        url: https://github.com/pulibrary/orangelight
-      - type: Website
-        url: https://catalog.princeton.edu/
-  - aid: princeton:bibdata
-    name: PUL Bibliographic Data Web Service (Bibdata)
-    x-operator: institution
-    description: >-
-      Princeton University Library's own bibliographic data service at bibdata.princeton.edu.
-      A Rails application (pulibrary/bibdata) that reads from Alma and re-serves bibliographic
-      records, holdings, delivery and holding locations, libraries and events as JSON, plus
-      periodic full dumps used to rebuild the Solr indexes behind the catalog. Location endpoints
-      such as /locations/libraries.json are anonymously readable; staff operations sit behind
-      Princeton CAS. The service prints its own deployed commit, deploy date and live index
-      timestamps on its home page — more operational transparency than most of this cohort offers.
-    humanURL: https://bibdata.princeton.edu/
-    baseURL: https://bibdata.princeton.edu
-    tags: [ Library, Metadata, JSON, Open Data ]
-    properties:
-      - type: Documentation
-        url: https://github.com/pulibrary/bibdata
-      - type: GitHubRepository
-        url: https://github.com/pulibrary/bibdata
-      - type: Website
-        url: https://bibdata.princeton.edu/
-  - aid: princeton:figgy-oai
-    name: Figgy Digital Repository — OAI-PMH and IIIF
-    x-operator: institution
-    description: >-
-      Figgy is Princeton University Library's Valkyrie-based digital repository backend
-      (pulibrary/figgy). It serves IIIF manifests for digitised material and exposes an OAI-PMH
-      2.0 metadata-harvesting endpoint at /oai whose Identify response names "Princeton
-      University Library", with an earliest datestamp of 2017-10-06 and transient deleted-record
-      support. This is Princeton's verified oai-pmh conformance under the education regime, and
-      unlike most of the cohort the endpoint is on the institution's own host running the
-      institution's own code.
-    humanURL: https://figgy.princeton.edu/
-    baseURL: https://figgy.princeton.edu/oai
-    tags: [ Repository, OAI-PMH, IIIF, Digital Collections, Library ]
-    properties:
-      - type: Documentation
-        url: https://github.com/pulibrary/figgy
-      - type: GitHubRepository
-        url: https://github.com/pulibrary/figgy
-      - type: Examples
-        url: examples/princeton-figgy-oai-identify.xml
-      - type: Conformance
-        url: conformance/princeton-conformance.yml
-  - aid: princeton:data-commons
-    name: Princeton Data Commons — Discovery
-    x-operator: institution
-    description: >-
-      Princeton's research data repository, split into pdc_describe for deposit and description
-      and pdc_discovery for the public portal at datacommons.princeton.edu/discovery. Both are
-      Princeton-written (pulibrary/pdc_discovery, pulibrary/pdc_describe), and the discovery
-      portal exposes an unauthenticated Blacklight JSON API. Datasets are addressed by DataCite
-      DOIs under Princeton's own 10.34770 prefix and records carry ORCID identifiers. This is the
-      slot most universities in this cohort fill with a Figshare or Dataverse tenancy; Princeton
-      operates it themselves.
-    humanURL: https://datacommons.princeton.edu/discovery
-    baseURL: https://datacommons.princeton.edu/discovery
-    tags: [ Research Data, Repository, DataCite, ORCID, Open Data ]
-    properties:
-      - type: Documentation
-        url: https://github.com/pulibrary/pdc_discovery
-      - type: GitHubRepository
-        url: https://github.com/pulibrary/pdc_discovery
-      - type: Conformance
-        url: conformance/princeton-conformance.yml
-      - type: Website
-        url: https://datacommons.princeton.edu/discovery
-  - aid: princeton:dataspace-oai
-    name: DataSpace Institutional Repository — OAI-PMH
-    x-operator: institution
-    description: >-
-      DataSpace is Princeton's older DSpace-based institutional repository for theses,
-      dissertations and archived research output, with an OAI-PMH metadata-harvesting endpoint
-      and content migrating to Princeton Data Commons. Registered with DataCite as client
-      pu.dataspace, which has minted 399 DOIs under the 10.34770 prefix. The host CNAMEs to
-      dataspace.pulcloud.io — pulcloud.io is Princeton University Library's own Google Cloud
-      estate, documented throughout pulibrary/princeton_ansible — so this is Princeton
-      infrastructure running open-source software, not a hosted vendor tenancy. Every request
-      currently returns 401 from Princeton's in-house ALTCHA proof-of-work bot challenge
-      (pulibrary/altcha_rust_server); that is a client-verification gate, not authentication, and
-      the June 2026 profile of this repo recorded it wrongly.
-    humanURL: https://dataspace.princeton.edu/about
-    baseURL: https://dataspace.princeton.edu/server/oai/request
-    tags: [ Repository, OAI-PMH, DSpace, Research Data, Theses ]
-    properties:
-      - type: Conformance
-        url: conformance/princeton-conformance.yml
-      - type: Lifecycle
-        url: lifecycle/princeton-lifecycle.yml
-  - aid: princeton:finding-aids
-    name: Princeton University Library Finding Aids (PULFAlight)
-    x-operator: institution
-    description: >-
-      Archival finding aids for Princeton's special collections and the Mudd Manuscript Library,
-      served by an ArcLight application the Library maintains as pulibrary/pulfalight. The
-      Blacklight .json surface returns collection and component records with facets and paging
-      links, anonymously.
-    humanURL: https://findingaids.princeton.edu/
-    baseURL: https://findingaids.princeton.edu
-    tags: [ Library, Archives, Finding Aids, Discovery, JSON ]
-    properties:
-      - type: GitHubRepository
-        url: https://github.com/pulibrary/pulfalight
-      - type: Website
-        url: https://findingaids.princeton.edu/
-  - aid: princeton:maps
-    name: Princeton University Library Maps and Geospatial Data (PUL Map)
-    x-operator: institution
-    description: >-
-      GeoBlacklight application at maps.princeton.edu (pulibrary/pulmap) serving Princeton's
-      geospatial data catalog. The .json surface is anonymously readable and the records follow
-      the OpenGeoMetadata conventions GeoBlacklight is built around.
-    humanURL: https://maps.princeton.edu/
-    baseURL: https://maps.princeton.edu
-    tags: [ Library, Geospatial, Open Data, Discovery, JSON ]
-    properties:
-      - type: GitHubRepository
-        url: https://github.com/pulibrary/pulmap
-      - type: Website
-        url: https://maps.princeton.edu/
-  - aid: princeton:digital-pul
-    name: Digital PUL (DPUL)
-    x-operator: institution
-    description: >-
-      Princeton's public digital collections site at dpul.princeton.edu (pulibrary/dpul), the
-      presentation layer over Figgy. Blacklight .json endpoints return collection and item
-      records anonymously; the same content is also reachable through Allsearch's /search/dpul
-      operation.
-    humanURL: https://dpul.princeton.edu/
-    baseURL: https://dpul.princeton.edu
-    tags: [ Digital Collections, Library, Discovery, JSON ]
-    properties:
-      - type: GitHubRepository
-        url: https://github.com/pulibrary/dpul
-      - type: Website
-        url: https://dpul.princeton.edu/
-  - aid: princeton:shibboleth-idp
-    name: Princeton Shibboleth Identity Provider — SAML 2.0 Metadata
-    x-operator: institution
-    description: >-
-      Princeton's campus identity provider publishes signed SAML 2.0 metadata at
-      idp.princeton.edu/idp/shibboleth. The EntityDescriptor names Princeton University, carries
-      administrative, support and technical contacts at princeton.edu, declares
-      protocolSupportEnumeration for Shibboleth 1.0, SAML 1.1 and SAML 2.0, and publishes signing
-      and encryption key descriptors plus shibmd:Scope elements. This is a machine-readable
-      contract that is institution-operated by definition, it is the university pipeline's
-      IdentityFederation class, and it is Princeton's verified shibboleth and saml conformance
-      under the education regime. It is also almost never catalogued anywhere.
-    humanURL: https://idp.princeton.edu/idp/shibboleth
-    baseURL: https://idp.princeton.edu/idp
-    tags: [ Identity Federation, Shibboleth, SAML, InCommon, Authentication ]
-    properties:
-      - type: Examples
-        url: examples/princeton-shibboleth-idp-metadata.xml
-      - type: Conformance
-        url: conformance/princeton-conformance.yml
-      - type: Authentication
-        url: authentication/princeton-authentication.yml
-  - aid: princeton:exlibris-tenancy
-    name: Ex Libris Alma / Primo VE — Princeton tenancy (01PRI_INST)
-    x-operator: tenant
-    description: >-
-      Princeton's library management and discovery layer runs on Ex Libris, with institution code
-      01PRI_INST: Alma at na05.alma.exlibrisgroup.com and a Primo VE instance at
-      princeton.primo.exlibrisgroup.com. Both returned 200. The data is Princeton's — its
-      holdings, its patrons, its link resolver targets, which surface in Allsearch results as
-      resource_url values — but the API contract belongs to Ex Libris and is scored against Ex
-      Libris, not Princeton. Recorded as a relationship because it is a real institutional fact
-      and because Princeton's own bibdata service is built on top of it. No vendor spec is saved
-      under this slug.
-    humanURL: https://princeton.primo.exlibrisgroup.com/
-    tags: [ Library, Vendor Tenancy, Discovery, Ex Libris ]
-    properties:
-      - type: Website
-        url: https://princeton.primo.exlibrisgroup.com/
-  - aid: princeton:canvas-tenancy
-    name: Canvas LMS — Princeton tenancy
-    x-operator: tenant
-    description: >-
-      Princeton's learning management system is Instructure Canvas at princeton.instructure.com.
-      The host is live behind a Cloudflare interstitial (403 to non-browser clients). Any Canvas
-      REST API, LTI conformance or Caliper eventing available there is Instructure's contract
-      running under Princeton's name, not Princeton engineering, so nothing is saved under this
-      slug. Recorded because the LMS tenancy is the single most consequential programmable
-      relationship a university has and leaving it out would misrepresent the footprint.
-    humanURL: https://princeton.instructure.com/
-    tags: [ LMS, Vendor Tenancy, Teaching, Canvas ]
-    properties:
-      - type: Website
-        url: https://princeton.instructure.com/
+- aid: princeton:art-museum-api
+  name: Princeton University Art Museum API
+  x-operator: institution
+  description: >-
+    Open, REST-style API providing developer access to data about the Princeton University Art Museum
+    and its collections. Four surfaces: objects (with a label-level /tombstone sub-resource and filtering
+    by maker, department, term and on-view status), makers, packages, and a full-text search endpoint
+    that returns the raw Elasticsearch envelope. Pagination and incremental harvesting are supported via
+    size, from, sort, sortorder and lastupdated. No authentication is currently required, though the Museum
+    documents that this may change. Weekly-refreshed static JSON dumps of the whole collection are offered
+    alongside the API for bulk and machine-learning use. The Museum publishes prose documentation, not
+    a contract; the OpenAPI in this repo is DERIVED from that documentation and verified against live
+    responses, and is not Princeton's own artifact.
+  humanURL: https://github.com/Princeton-University-Art-Museum/puam-api-docs
+  baseURL: https://data.artmuseum.princeton.edu
+  tags:
+  - Museum
+  - Collection
+  - Open Data
+  - IIIF
+  - JSON
+  tags_raw:
+  - Museum
+  - Collections
+  - Open Data
+  - IIIF
+  - JSON
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-art-museum-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Princeton-University-Art-Museum/puam-api-docs
+  - type: GitHubOrganization
+    url: https://github.com/Princeton-University-Art-Museum
+  - type: JSONSchema
+    url: json-schema/princeton-art-museum-object.json
+  - type: Examples
+    url: examples/princeton-art-museum-tombstone-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+- aid: princeton:oit-api-gateway
+  name: Princeton OIT API Gateway
+  x-operator: institution
+  description: >-
+    Princeton's Office of Information Technology enterprise API gateway, running WSO2 API Manager. Fronts
+    institutional APIs — ActiveDirectory user and group lookups, PrincetonInfo departmental data, a MobileApp
+    surface carrying course, dining and campus places data, and the LibAlma patron feed the Library consumes.
+    Every call requires a bearer token obtained through a NetID or departmental service-account subscription,
+    so the surface is real but invisible to the public: anonymous requests return 401 with an empty body.
+    The API Store developer portal that used to front it, api-store.princeton.edu, no longer resolves
+    (NXDOMAIN, 2026-08-19), and no successor portal is published, so the gateway currently has no discoverable
+    documentation of any kind. This is the course-catalog and registrar surface the university pipeline
+    hunts for — it exists, and it is closed.
+  baseURL: https://api.princeton.edu
+  tags:
+  - Identity
+  - Directory
+  - Courses
+  - Gated
+  - Authentication
+  - Gateway
+  tags_raw:
+  - Identity
+  - Directory
+  - Courses
+  - Gated
+  - OAuth2
+  - Gateway
+  properties:
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: Lifecycle
+    url: lifecycle/princeton-lifecycle.yml
+- aid: princeton:catalog
+  name: Princeton University Library Catalog (Orangelight)
+  x-operator: institution
+  description: >-
+    Princeton's library catalog at catalog.princeton.edu, a Blacklight application the Library writes
+    and maintains itself as pulibrary/orangelight. Every route answers to a .json suffix, so catalog.princeton.edu/catalog.json
+    is an unauthenticated search API returning a JSON:API-shaped envelope with self/next/last/prev links,
+    facets and full record documents. Records carry Alma MMS IDs; the underlying library system is an
+    Ex Libris tenancy, but this contract and this application are Princeton's own code.
+  humanURL: https://catalog.princeton.edu/
+  baseURL: https://catalog.princeton.edu
+  tags:
+  - Library
+  - Catalog
+  - Discovery
+  - Blacklight
+  - JSON
+  properties:
+  - type: Documentation
+    url: https://github.com/pulibrary/orangelight
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/orangelight
+  - type: Website
+    url: https://catalog.princeton.edu/
+- aid: princeton:bibdata
+  name: PUL Bibliographic Data Web Service (Bibdata)
+  x-operator: institution
+  description: >-
+    Princeton University Library's own bibliographic data service at bibdata.princeton.edu. A Rails application
+    (pulibrary/bibdata) that reads from Alma and re-serves bibliographic records, holdings, delivery and
+    holding locations, libraries and events as JSON, plus periodic full dumps used to rebuild the Solr
+    indexes behind the catalog. Location endpoints such as /locations/libraries.json are anonymously readable;
+    staff operations sit behind Princeton CAS. The service prints its own deployed commit, deploy date
+    and live index timestamps on its home page — more operational transparency than most of this cohort
+    offers.
+  humanURL: https://bibdata.princeton.edu/
+  baseURL: https://bibdata.princeton.edu
+  tags:
+  - Library
+  - Metadata
+  - JSON
+  - Open Data
+  properties:
+  - type: Documentation
+    url: https://github.com/pulibrary/bibdata
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/bibdata
+  - type: Website
+    url: https://bibdata.princeton.edu/
+- aid: princeton:figgy-oai
+  name: Figgy Digital Repository — OAI-PMH and IIIF
+  x-operator: institution
+  description: >-
+    Figgy is Princeton University Library's Valkyrie-based digital repository backend (pulibrary/figgy).
+    It serves IIIF manifests for digitised material and exposes an OAI-PMH 2.0 metadata-harvesting endpoint
+    at /oai whose Identify response names "Princeton University Library", with an earliest datestamp of
+    2017-10-06 and transient deleted-record support. This is Princeton's verified oai-pmh conformance
+    under the education regime, and unlike most of the cohort the endpoint is on the institution's own
+    host running the institution's own code.
+  humanURL: https://figgy.princeton.edu/
+  baseURL: https://figgy.princeton.edu/oai
+  tags:
+  - Repository
+  - OAI-PMH
+  - IIIF
+  - Digital Collections
+  - Library
+  properties:
+  - type: Documentation
+    url: https://github.com/pulibrary/figgy
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/figgy
+  - type: Examples
+    url: examples/princeton-figgy-oai-identify.xml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+- aid: princeton:data-commons
+  name: Princeton Data Commons — Discovery
+  x-operator: institution
+  description: >-
+    Princeton's research data repository, split into pdc_describe for deposit and description and pdc_discovery
+    for the public portal at datacommons.princeton.edu/discovery. Both are Princeton-written (pulibrary/pdc_discovery,
+    pulibrary/pdc_describe), and the discovery portal exposes an unauthenticated Blacklight JSON API.
+    Datasets are addressed by DataCite DOIs under Princeton's own 10.34770 prefix and records carry ORCID
+    identifiers. This is the slot most universities in this cohort fill with a Figshare or Dataverse tenancy;
+    Princeton operates it themselves.
+  humanURL: https://datacommons.princeton.edu/discovery
+  baseURL: https://datacommons.princeton.edu/discovery
+  tags:
+  - Research Data
+  - Repository
+  - DataCite
+  - ORCID
+  - Open Data
+  properties:
+  - type: Documentation
+    url: https://github.com/pulibrary/pdc_discovery
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/pdc_discovery
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://datacommons.princeton.edu/discovery
+- aid: princeton:dataspace-oai
+  name: DataSpace Institutional Repository — OAI-PMH
+  x-operator: institution
+  description: >-
+    DataSpace is Princeton's older DSpace-based institutional repository for theses, dissertations and
+    archived research output, with an OAI-PMH metadata-harvesting endpoint and content migrating to Princeton
+    Data Commons. Registered with DataCite as client pu.dataspace, which has minted 399 DOIs under the
+    10.34770 prefix. The host CNAMEs to dataspace.pulcloud.io — pulcloud.io is Princeton University Library's
+    own Google Cloud estate, documented throughout pulibrary/princeton_ansible — so this is Princeton
+    infrastructure running open-source software, not a hosted vendor tenancy. Every request currently
+    returns 401 from Princeton's in-house ALTCHA proof-of-work bot challenge (pulibrary/altcha_rust_server);
+    that is a client-verification gate, not authentication, and the June 2026 profile of this repo recorded
+    it wrongly.
+  humanURL: https://dataspace.princeton.edu/about
+  baseURL: https://dataspace.princeton.edu/server/oai/request
+  tags:
+  - Repository
+  - OAI-PMH
+  - DSpace
+  - Research Data
+  - Theses
+  properties:
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/princeton-lifecycle.yml
+- aid: princeton:finding-aids
+  name: Princeton University Library Finding Aids (PULFAlight)
+  x-operator: institution
+  description: >-
+    Archival finding aids for Princeton's special collections and the Mudd Manuscript Library, served
+    by an ArcLight application the Library maintains as pulibrary/pulfalight. The Blacklight .json surface
+    returns collection and component records with facets and paging links, anonymously.
+  humanURL: https://findingaids.princeton.edu/
+  baseURL: https://findingaids.princeton.edu
+  tags:
+  - Library
+  - Archives
+  - Finding Aids
+  - Discovery
+  - JSON
+  properties:
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/pulfalight
+  - type: Website
+    url: https://findingaids.princeton.edu/
+- aid: princeton:maps
+  name: Princeton University Library Maps and Geospatial Data (PUL Map)
+  x-operator: institution
+  description: >-
+    GeoBlacklight application at maps.princeton.edu (pulibrary/pulmap) serving Princeton's geospatial
+    data catalog. The .json surface is anonymously readable and the records follow the OpenGeoMetadata
+    conventions GeoBlacklight is built around.
+  humanURL: https://maps.princeton.edu/
+  baseURL: https://maps.princeton.edu
+  tags:
+  - Library
+  - Geospatial
+  - Open Data
+  - Discovery
+  - JSON
+  properties:
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/pulmap
+  - type: Website
+    url: https://maps.princeton.edu/
+- aid: princeton:digital-pul
+  name: Digital PUL (DPUL)
+  x-operator: institution
+  description: >-
+    Princeton's public digital collections site at dpul.princeton.edu (pulibrary/dpul), the presentation
+    layer over Figgy. Blacklight .json endpoints return collection and item records anonymously; the same
+    content is also reachable through Allsearch's /search/dpul operation.
+  humanURL: https://dpul.princeton.edu/
+  baseURL: https://dpul.princeton.edu
+  tags:
+  - Digital Collections
+  - Library
+  - Discovery
+  - JSON
+  properties:
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/dpul
+  - type: Website
+    url: https://dpul.princeton.edu/
+- aid: princeton:shibboleth-idp
+  name: Princeton Shibboleth Identity Provider — SAML 2.0 Metadata
+  x-operator: institution
+  description: >-
+    Princeton's campus identity provider publishes signed SAML 2.0 metadata at idp.princeton.edu/idp/shibboleth.
+    The EntityDescriptor names Princeton University, carries administrative, support and technical contacts
+    at princeton.edu, declares protocolSupportEnumeration for Shibboleth 1.0, SAML 1.1 and SAML 2.0, and
+    publishes signing and encryption key descriptors plus shibmd:Scope elements. This is a machine-readable
+    contract that is institution-operated by definition, it is the university pipeline's IdentityFederation
+    class, and it is Princeton's verified shibboleth and saml conformance under the education regime.
+    It is also almost never catalogued anywhere.
+  humanURL: https://idp.princeton.edu/idp/shibboleth
+  baseURL: https://idp.princeton.edu/idp
+  tags:
+  - Identity Federation
+  - Shibboleth
+  - SAML
+  - InCommon
+  - Authentication
+  properties:
+  - type: Examples
+    url: examples/princeton-shibboleth-idp-metadata.xml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+- aid: princeton:exlibris-tenancy
+  name: Ex Libris Alma / Primo VE — Princeton tenancy (01PRI_INST)
+  x-operator: tenant
+  description: >-
+    Princeton's library management and discovery layer runs on Ex Libris, with institution code 01PRI_INST:
+    Alma at na05.alma.exlibrisgroup.com and a Primo VE instance at princeton.primo.exlibrisgroup.com.
+    Both returned 200. The data is Princeton's — its holdings, its patrons, its link resolver targets,
+    which surface in Allsearch results as resource_url values — but the API contract belongs to Ex Libris
+    and is scored against Ex Libris, not Princeton. Recorded as a relationship because it is a real institutional
+    fact and because Princeton's own bibdata service is built on top of it. No vendor spec is saved under
+    this slug.
+  humanURL: https://princeton.primo.exlibrisgroup.com/
+  tags:
+  - Library
+  - Vendor Tenancy
+  - Discovery
+  - Ex Libris
+  properties:
+  - type: Website
+    url: https://princeton.primo.exlibrisgroup.com/
+- aid: princeton:canvas-tenancy
+  name: Canvas LMS — Princeton tenancy
+  x-operator: tenant
+  description: >-
+    Princeton's learning management system is Instructure Canvas at princeton.instructure.com. The host
+    is live behind a Cloudflare interstitial (403 to non-browser clients). Any Canvas REST API, LTI conformance
+    or Caliper eventing available there is Instructure's contract running under Princeton's name, not
+    Princeton engineering, so nothing is saved under this slug. Recorded because the LMS tenancy is the
+    single most consequential programmable relationship a university has and leaving it out would misrepresent
+    the footprint.
+  humanURL: https://princeton.instructure.com/
+  tags:
+  - LMS
+  - Vendor Tenancy
+  - Teaching
+  - Canvas
+  properties:
+  - type: Website
+    url: https://princeton.instructure.com/
+- aid: princeton:princeton-article-api
+  name: Princeton University Article API
+  description: The Article API from Princeton University — 1 operation(s) for article.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Article
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-article-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-banner-api
+  name: Princeton University Banner API
+  description: The Banner API from Princeton University — 1 operation(s) for banner.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Banner
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-banner-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-best-bets-api
+  name: Princeton University Best Bets API
+  description: The Best Bets API from Princeton University — 1 operation(s) for best bets.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Best Bets
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-best-bets-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-catalog-api
+  name: Princeton University Catalog API
+  description: The Catalog API from Princeton University — 1 operation(s) for catalog.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-catalog-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-dpul-api
+  name: Princeton University Dpul API
+  description: The Dpul API from Princeton University — 1 operation(s) for dpul.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Dpul
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-dpul-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-findingaids-api
+  name: Princeton University Findingaids API
+  description: The Findingaids API from Princeton University — 1 operation(s) for findingaids.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Findingaids
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-findingaids-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-journals-api
+  name: Princeton University Journals API
+  description: The Journals API from Princeton University — 1 operation(s) for journals.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Journals
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-journals-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-libanswers-api
+  name: Princeton University Libanswers API
+  description: The Libanswers API from Princeton University — 1 operation(s) for libanswers.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Libanswers
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-libanswers-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-libguides-api
+  name: Princeton University Libguides API
+  description: The Libguides API from Princeton University — 1 operation(s) for libguides.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Libguides
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-libguides-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-library-databases-api
+  name: Princeton University Library Databases API
+  description: >-
+    The Library Databases API from Princeton University — 1 operation(s) for library databases.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Library Databases
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-library-databases-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-library-staff-api
+  name: Princeton University Library Staff API
+  description: The Library Staff API from Princeton University — 1 operation(s) for library staff.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Library Staff
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-library-staff-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-library-website-api
+  name: Princeton University Library Website API
+  description: The Library Website API from Princeton University — 1 operation(s) for library website.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Library Website
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-library-website-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-makers-api
+  name: Princeton University Makers API
+  description: Artists, cultural groups and other makers.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Makers
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-makers-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-objects-api
+  name: Princeton University Objects API
+  description: Art objects in the Museum's collection.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Objects
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-objects-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-packages-api
+  name: Princeton University Packages API
+  description: Curated groupings of collection material.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Packages
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-packages-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-pulmap-api
+  name: Princeton University Pulmap API
+  description: The Pulmap API from Princeton University — 1 operation(s) for pulmap.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Pulmap
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-pulmap-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
+- aid: princeton:princeton-search-api
+  name: Princeton University Search API
+  description: Full-text search across all collection data types.
+  humanURL: https://allsearch-api.princeton.edu/api-docs
+  baseURL: https://allsearch-api.princeton.edu
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/princeton-search-api-openapi.yml
+  - type: APIReference
+    url: https://allsearch-api.princeton.edu/api-docs
+  - type: Documentation
+    url: https://github.com/pulibrary/allsearch_api
+  - type: GitHubRepository
+    url: https://github.com/pulibrary/allsearch_api
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-search-response.json
+  - type: JSONSchema
+    url: json-schema/princeton-allsearch-error.json
+  - type: Examples
+    url: examples/princeton-allsearch-catalog-search-200.json
+  - type: Authentication
+    url: authentication/princeton-authentication.yml
+  - type: ErrorCatalog
+    url: errors/princeton-errors.yml
+  - type: SpectralRules
+    url: rules/princeton-openapi-spectral-rules.yml
+  - type: Conformance
+    url: conformance/princeton-conformance.yml
+  - type: Website
+    url: https://allsearch.princeton.edu/
 common:
   - type: Website
     url: https://www.princeton.edu/
