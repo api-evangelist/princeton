@@ -1,0 +1,41 @@
+openapi: 3.2.0
+info:
+  title: Allsearch Library Databases API
+  description: Backend API for allsearch.princeton.edu
+  version: v1
+servers:
+- url: https://allsearch-api.princeton.edu
+- url: https://allsearch-api-staging.princeton.edu
+tags:
+- name: Library Databases
+paths:
+  /search/database:
+    parameters:
+    - name: query
+      in: query
+      description: A string to query the Library Databases
+      schema:
+        type: string
+    get:
+      summary: /search/database?query={query}
+      tags:
+      - Library Databases
+      operationId: searchDatabase
+      description: Searches for relevant Library Databases using a query term
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                number: 0
+                records: []
+                more: https://libguides.princeton.edu/az/databases?q=oxford%20music
+        '400':
+          description: with a search query that only contains whitespace
+          content:
+            application/json:
+              example:
+                error:
+                  problem: QUERY_IS_EMPTY
+                  message: The query param must contain non-whitespace characters.

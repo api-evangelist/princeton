@@ -1,0 +1,46 @@
+{
+    "number": 87225,
+    "records": [
+        {
+            "title": "Climate.",
+            "creator": "Powis, Anthony",
+            "publisher": "[Place of publication not identified], MOULD, 2022.",
+            "id": "99131693274706421",
+            "type": "Book",
+            "url": "https://catalog.princeton.edu/catalog/99131693274706421",
+            "other_fields": {
+                "online_access_count": "1",
+                "resource_url": "https://na05.alma.exlibrisgroup.com/view/uresolver/01PRI_INST/openurl?u.ignore_date_coverage=true&portfolio_pid=531094827990006421&Force_direct=true",
+                "resource_url_label": "Library Stack"
+            }
+        },
+        {
+            "title": "Climate.",
+            "publisher": "Basel, Switzerland : MDPI AG, 2013-",
+            "id": "99125120771306421",
+            "type": "Journal",
+            "url": "https://catalog.princeton.edu/catalog/99125120771306421",
+            "other_fields": {
+                "online_access_count": "5",
+                "resource_url": "https://na05.alma.exlibrisgroup.com/view/uresolver/01PRI_INST/openurl?u.ignore_date_coverage=true&portfolio_pid=53756991830006421&Force_direct=true",
+                "resource_url_label": "MDPI - Multidisciplinary Digital Publishing Institute"
+            }
+        },
+        {
+            "title": "Climate / Whitney Hanson.",
+            "creator": "Hanson, Whitney",
+            "publisher": "New York, NY : Penguin Books, an imprint of Penguin Random House LLC, 2025.",
+            "id": "99131815860906421",
+            "type": "Book",
+            "url": "https://catalog.princeton.edu/catalog/99131815860906421",
+            "other_fields": {
+                "first_barcode": "32101117070795",
+                "first_call_number": "PS3608.A72336 C55 2025",
+                "first_library": "Firestone Library",
+                "first_status": "Available",
+                "online_access_count": "0"
+            }
+        }
+    ],
+    "more": "https://catalog.princeton.edu/catalog?q=climate&search_field=all_fields"
+}

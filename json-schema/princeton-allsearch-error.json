@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/princeton/refs/heads/main/json-schema/princeton-allsearch-error.json",
+  "title": "Princeton Allsearch error envelope",
+  "description": "Error body returned by the Princeton University Library Allsearch API. Not RFC 9457; a nested object carrying a machine-readable problem code and a human message. Derived from a live 400 response on 2026-08-19.",
+  "x-provenance": {
+    "generated": "2026-08-19",
+    "method": "derived",
+    "source": "https://allsearch-api.princeton.edu/search/catalog",
+    "verified_against": "examples/princeton-allsearch-empty-query-400.json",
+    "x-operator": "institution"
+  },
+  "type": "object",
+  "required": ["error"],
+  "properties": {
+    "error": {
+      "type": "object",
+      "required": ["problem", "message"],
+      "properties": {
+        "problem": {
+          "type": "string",
+          "description": "Machine-readable problem code. Observed value: QUERY_IS_EMPTY. Princeton publishes no enumeration of the full set, so this is not constrained here.",
+          "examples": ["QUERY_IS_EMPTY"]
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable explanation.",
+          "examples": ["The query param must contain non-whitespace characters."]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,64 @@
+openapi: 3.2.0
+info:
+  title: Allsearch Dpul API
+  description: Backend API for allsearch.princeton.edu
+  version: v1
+servers:
+- url: https://allsearch-api.princeton.edu
+- url: https://allsearch-api-staging.princeton.edu
+tags:
+- name: Dpul
+paths:
+  /search/dpul:
+    parameters:
+    - name: query
+      in: query
+      description: A string to query Dpul
+      schema:
+        type: string
+    get:
+      summary: /search/dpul?query={query}
+      tags:
+      - Dpul
+      operationId: searchDpul
+      description: Searches Dpul using a query term
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                number: 238
+                records:
+                - title: Super Cats. Catamaran Sailing Cruises. Barbados.
+                  publisher: Super Cats Catamaran Cruise
+                  id: 84d1831552336b47327c35ec3a9e91ca
+                  type: Flyers
+                  url: https://dpul.princeton.edu/catalog/84d1831552336b47327c35ec3a9e91ca
+                  other_fields:
+                    collection: Latin American Ephemera
+                - title: 'Robinson Crusoe, The clever cats, &c. : a picture-book for the nursery ; containing sixteen coloured illustrations'
+                  creator: Defoe, Daniel, 1661?-1731
+                  publisher: 'London ; Edinburgh ; New York : Thomas Nelson & Sons, [not after 1888]'
+                  id: 02578b4e2ccf4497f1426a3ab7e11464
+                  type: Book
+                  url: https://dpul.princeton.edu/catalog/02578b4e2ccf4497f1426a3ab7e11464
+                  other_fields:
+                    collection: Lloyd E. Cotsen
+                - title: '[Cat near fishbowl].'
+                  creator: Isoda, Koryūsai, active 1764-1788
+                  publisher: n.d.
+                  id: c68aa97b019a52478cc7dc6396336158
+                  type: Visual material
+                  url: https://dpul.princeton.edu/catalog/c68aa97b019a52478cc7dc6396336158
+                  other_fields:
+                    collection: Treasures of the Graphic Arts Collection
+                more: https://dpul.princeton.edu/catalog?q=cats&search_field=all_fields
+        '400':
+          description: with a search query that only contains whitespace
+          content:
+            application/json:
+              example:
+                error:
+                  problem: QUERY_IS_EMPTY
+                  message: The query param must contain non-whitespace characters.

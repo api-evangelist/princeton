@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/princeton/refs/heads/main/json-schema/princeton-art-museum-object.json",
+  "title": "Princeton University Art Museum art object",
+  "description": "Record shape for an art object returned by data.artmuseum.princeton.edu. Derived from the Museum's published prose documentation (puam-api-docs) and verified against live responses on 2026-08-19. The Museum publishes no schema of its own.",
+  "x-provenance": {
+    "generated": "2026-08-19",
+    "method": "derived",
+    "source": "https://github.com/Princeton-University-Art-Museum/puam-api-docs",
+    "verified_against": "https://data.artmuseum.princeton.edu/objects/9449",
+    "x-operator": "institution"
+  },
+  "type": "object",
+  "required": ["objectid"],
+  "properties": {
+    "type": { "type": "string", "examples": ["artobject"] },
+    "objectid": { "type": "integer" },
+    "objectnumber": { "type": "string", "description": "Accession number, e.g. x1954-13." },
+    "sortnumber": { "type": "string" },
+    "displaytitle": { "type": "string" },
+    "department": { "type": "string" },
+    "classification": { "type": "string" },
+    "datebegin": { "type": ["integer", "null"] },
+    "dateend": { "type": ["integer", "null"] },
+    "datecomputed": { "type": ["integer", "null"] },
+    "daterange": { "type": ["string", "null"] },
+    "displaydate": { "type": ["string", "null"] },
+    "medium": { "type": ["string", "null"] },
+    "dimensions": { "type": ["string", "null"] },
+    "creditline": { "type": ["string", "null"] },
+    "markings": { "type": ["string", "null"] },
+    "inscribed": { "type": ["string", "null"] },
+    "signed": { "type": ["string", "null"] },
+    "catalograisonne": { "type": ["string", "null"] },
+    "restrictions": { "type": ["string", "null"] },
+    "nowebuse": { "type": ["string", "boolean"], "description": "Rights flag serialised as the string \"False\"/\"True\" rather than a JSON boolean." },
+    "campuscollections": { "type": ["string", "boolean"] },
+    "on_view": { "type": "boolean" },
+    "accessionyear": { "type": ["string", "null"], "format": "date" },
+    "titles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "titletype": { "type": "string" },
+          "displayorder": { "type": "integer" }
+        }
+      }
+    },
+    "makers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "displayname": { "type": "string" },
+          "displaydate": { "type": ["string", "null"] },
+          "datebegin": { "type": ["integer", "null"] },
+          "dateend": { "type": ["integer", "null"] },
+          "prefix": { "type": ["string", "null"] },
+          "suffix": { "type": ["string", "null"] },
+          "role": { "type": ["string", "null"] },
+          "displaymaker": { "type": ["string", "null"] },
+          "displayorder": { "type": "integer" }
+        }
+      }
+    },
+    "depicted": { "type": "array", "items": { "type": "object" } },
+    "texts": { "type": "array", "items": { "type": "object" } }
+  },
+  "additionalProperties": true
+}

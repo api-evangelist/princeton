@@ -1,0 +1,102 @@
+generated: '2026-08-19'
+method: probed
+source: live probes against Princeton-operated hosts, 2026-08-19
+x-operator: institution
+rfc9457: false
+note: >-
+  Princeton publishes no error catalog. This profile is assembled from probed responses. The
+  Allsearch API is the only Princeton surface found that returns a NAMED, machine-readable problem
+  code; the Art Museum API returns plain-text bodies and the OIT gateway returns WSO2's fault
+  envelope. One soft-200 anti-pattern was found and is recorded rather than smoothed over.
+envelopes:
+- name: AllsearchError
+  applies_to: https://allsearch-api.princeton.edu
+  content_type: application/json
+  shape:
+    error:
+      problem: string
+      message: string
+  example:
+    error:
+      problem: QUERY_IS_EMPTY
+      message: The query param must contain non-whitespace characters.
+  verified:
+  - url: https://allsearch-api.princeton.edu/search/catalog
+    status: 400
+- name: WSO2Fault
+  applies_to: https://api.princeton.edu
+  content_type: application/xml
+  shape:
+    am:fault: {code: string, type: string, message: string, description: string}
+  example: >-
+    <am:fault xmlns:am="http://wso2.org/apimanager"><am:code>404</am:code><am:type>Status
+    report</am:type><am:message>Runtime Error</am:message><am:description>No matching resource
+    found…</am:description></am:fault>
+  note: >-
+    This envelope is WSO2 API Manager's, not Princeton's. Recorded so a consumer can parse it;
+    not credited to Princeton as an error design decision.
+  verified:
+  - url: https://api.princeton.edu/registrar/course-offerings
+    status: 404
+- name: ArtMuseumPlainText
+  applies_to: https://data.artmuseum.princeton.edu
+  content_type: text/plain
+  example: Bad Request
+  note: >-
+    The Art Museum API answers a malformed multi-object query with an 11-byte plain-text
+    "Bad Request" and no machine-readable code. Object-level 404s return a short HTML error page
+    from the Express default handler.
+  verified:
+  - url: https://data.artmuseum.princeton.edu/objects?size=1
+    status: 400
+  - url: https://data.artmuseum.princeton.edu/
+    status: 404
+status_codes:
+- status: 200
+  meaning: Successful read.
+  retryable: false
+- status: 400
+  meaning: >-
+    Allsearch — missing or whitespace-only `query`, returned with problem code QUERY_IS_EMPTY.
+    Art Museum — unaccepted filter combination, plain text.
+  retryable: false
+- status: 401
+  meaning: >-
+    api.princeton.edu — no bearer token. dataspace.princeton.edu — Princeton's own ALTCHA
+    proof-of-work bot challenge, which is a client-verification gate rather than an
+    authentication failure despite the code.
+  retryable: false
+- status: 404
+  meaning: Unknown identifier, or an unpublished path on the OIT gateway.
+  retryable: false
+anti_patterns:
+- id: soft-200-on-unknown-route
+  surface: https://allsearch-api.princeton.edu
+  detail: >-
+    An unknown search route (/search/nope?query=x) returns 200 with the API's root identity
+    document — {"application":"Princeton University Library All Search API", …} — instead of a
+    404. A client that only checks the status code will treat a typo'd route as a successful
+    empty result. Recorded as an observed defect in the deployed behaviour, not a scoring claim.
+  verified:
+  - url: https://allsearch-api.princeton.edu/search/nope?query=x
+    status: 200
+  - url: https://allsearch-api.princeton.edu/totally-fake-xyz789
+    status: 200
+- id: soft-200-produces-false-agent-surface-credit
+  surface: https://allsearch-api.princeton.edu
+  detail: >-
+    The same catch-all makes /llms.txt and /.well-known/api-catalog both return 200 — with the
+    root identity document, not the artifact. A probe that only reads status codes would credit
+    this API with an llms.txt and a well-known API catalog it does not publish. Recorded as a
+    NEGATIVE finding: neither artifact exists. The control probe /totally-fake-xyz789 returns the
+    identical body, which is how the false credit was ruled out.
+  verified:
+  - url: https://allsearch-api.princeton.edu/llms.txt
+    status: 200
+    note: FALSE CREDIT — body is the root identity document, not an llms.txt. Not published.
+  - url: https://allsearch-api.princeton.edu/.well-known/api-catalog
+    status: 200
+    note: FALSE CREDIT — same catch-all body. Not published.
+  - url: https://allsearch-api.princeton.edu/totally-fake-xyz789
+    status: 200
+    note: Control probe. Identical body, proving the 200s above are the catch-all.

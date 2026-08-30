@@ -1,0 +1,40 @@
+openapi: 3.2.0
+info:
+  title: Allsearch Best Bets API
+  description: Backend API for allsearch.princeton.edu
+  version: v1
+servers:
+- url: https://allsearch-api.princeton.edu
+- url: https://allsearch-api-staging.princeton.edu
+tags:
+- name: Best Bets
+paths:
+  /search/best-bet:
+    parameters:
+    - name: query
+      in: query
+      description: A string to query the Best Bets
+      schema:
+        type: string
+    get:
+      summary: /search/best-bet?query={query}
+      tags:
+      - Best Bets
+      operationId: searchBestBet
+      description: Searches the Best Bets using a query term
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                number: 0
+                records: []
+        '400':
+          description: with a search query that only contains whitespace
+          content:
+            application/json:
+              example:
+                error:
+                  problem: QUERY_IS_EMPTY
+                  message: The query param must contain non-whitespace characters.

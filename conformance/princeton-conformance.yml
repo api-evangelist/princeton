@@ -1,0 +1,122 @@
+generated: '2026-08-19'
+method: probed
+source: live Princeton-operated hosts, probed 2026-08-19
+note: >-
+  Conformance targets for the Kin Score `education` regulatory regime, each checked against a
+  machine-readable surface Princeton itself operates rather than against a prose claim. Only hits
+  with a fetchable artifact and a status code are recorded. REWARD-ONLY: absence below means the
+  probe did not find it, not that Princeton denies it.
+x-operator: institution
+standards:
+- id: oai-pmh
+  name: OAI-PMH 2.0 (Open Archives Initiative Protocol for Metadata Harvesting)
+  conforms: true
+  evidence: >-
+    https://figgy.princeton.edu/oai?verb=Identify returned 200 with a valid OAI-PMH 2.0
+    Identify response: protocolVersion 2.0, repositoryName "Princeton University Library",
+    baseURL https://figgy.princeton.edu/oai, granularity YYYY-MM-DDThh:mm:ssZ,
+    repositoryIdentifier "figgy".
+  location: examples/princeton-figgy-oai-identify.xml
+  url: https://figgy.princeton.edu/oai?verb=Identify
+  status: 200
+  x-operator: institution
+- id: oai-pmh
+  name: OAI-PMH 2.0 — DataSpace institutional repository
+  conforms: unverified
+  evidence: >-
+    https://dataspace.princeton.edu/server/oai/request?verb=Identify returned 401 from Princeton's
+    own ALTCHA proof-of-work bot challenge (pulibrary/altcha_rust_server), not from an
+    authentication requirement. The endpoint is live behind a challenge we did not solve; the
+    June 2026 review recorded this as "requires authentication", which was wrong.
+  url: https://dataspace.princeton.edu/server/oai/request?verb=Identify
+  status: 401
+  x-operator: institution
+- id: shibboleth
+  name: Shibboleth Identity Provider
+  conforms: true
+  evidence: >-
+    https://idp.princeton.edu/idp/shibboleth returned 200 with a SAML EntityDescriptor whose
+    IDPSSODescriptor declares protocolSupportEnumeration "urn:mace:shibboleth:1.0
+    urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:2.0:protocol", with
+    shibmd:Scope elements and Princeton IAM / OIT contacts.
+  location: examples/princeton-shibboleth-idp-metadata.xml
+  url: https://idp.princeton.edu/idp/shibboleth
+  status: 200
+  x-operator: institution
+- id: saml
+  name: SAML 2.0 Web Browser SSO
+  conforms: true
+  evidence: >-
+    Same EntityDescriptor. SingleSignOnService and SingleLogoutService endpoints are published
+    for SAML 2.0 and SAML 1.1, with signing and encryption KeyDescriptors. Institution-operated
+    by definition — this is Princeton's own IdP, not a vendor's.
+  location: examples/princeton-shibboleth-idp-metadata.xml
+  url: https://idp.princeton.edu/idp/shibboleth
+  status: 200
+  x-operator: institution
+- id: datacite
+  name: DataCite DOI registration
+  conforms: true
+  evidence: >-
+    Princeton is a DataCite repository member with three registered clients returned by
+    https://api.datacite.org/clients?query=princeton — pu.dataspace ("DataSpace", registered
+    2019), pu.tigerdata ("Princeton TigerData") and pu.openpublishing ("Princeton University
+    Library Open Access Publishing"). The pu.dataspace client has minted 399 DOIs under the
+    10.34770 prefix; Princeton Data Commons records are addressed by those DOIs
+    (e.g. doi-10-34770-3cyy-d553 in the PDC discovery JSON).
+  url: https://api.datacite.org/clients/pu.dataspace
+  status: 200
+  x-operator: institution
+- id: orcid
+  name: ORCID
+  conforms: true
+  evidence: >-
+    Princeton runs its own ORCID integration service at https://orcid.princeton.edu (200),
+    open-sourced as pulibrary/orcid_princeton, and ORCID iDs appear as a facet/field in the
+    Princeton Data Commons discovery JSON at datacommons.princeton.edu/discovery.
+  url: https://orcid.princeton.edu/
+  status: 200
+  x-operator: institution
+- id: iiif
+  name: IIIF (International Image Interoperability Framework)
+  conforms: true
+  evidence: >-
+    Figgy is Princeton University Library's Valkyrie-based digital repository backend
+    (github.com/pulibrary/figgy) and serves IIIF manifests; the Art Museum API documentation
+    describes IIIF image URIs for object images. Not an `education`-regime standard, recorded
+    because it is a real machine-readable interoperability commitment.
+  url: https://figgy.princeton.edu/
+  status: 200
+  x-operator: institution
+- id: openapi
+  name: OpenAPI 3.1.1
+  conforms: true
+  evidence: >-
+    The Allsearch API publishes its own OpenAPI 3.1.1 document at
+    https://allsearch-api.princeton.edu/api-docs/v1/swagger.yaml with a Swagger UI at
+    /api-docs. Generated from the application's own request specs
+    (github.com/pulibrary/allsearch_api, rake openapi:generate).
+  location: openapi/_original/princeton-allsearch-api-openapi.yml
+  url: https://allsearch-api.princeton.edu/api-docs/v1/swagger.yaml
+  status: 200
+  x-operator: institution
+not_found:
+- id: scim
+  note: No SCIM 2.0 provisioning endpoint found on a public Princeton host.
+- id: lti
+  note: >-
+    Princeton's LMS is Canvas (Instructure). Any LTI conformance there belongs to the vendor's
+    contract, not Princeton's — a tenant relationship, not an institutional surface.
+- id: oneroster
+  note: Not found. IMS Global OneRoster is a K-12 roster standard; no higher-ed surface expected or found.
+- id: ed-fi
+  note: Not found. Ed-Fi is a K-12 data standard.
+- id: caliper
+  note: No public Caliper Analytics endpoint found.
+- id: qti
+  note: No public QTI assessment surface found.
+- id: crossref
+  note: >-
+    Not verified as a Princeton-registered Crossref prefix. Princeton's research-output DOIs run
+    through DataCite (above); journal DOIs for Princeton University Press are a separate legal
+    entity and were not credited here.

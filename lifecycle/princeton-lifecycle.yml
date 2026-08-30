@@ -1,0 +1,47 @@
+generated: '2026-08-19'
+method: probed
+source: live probes and the pulibrary GitHub organisation, 2026-08-19
+x-operator: institution
+note: >-
+  Princeton publishes no deprecation policy, SLA or status page for any of its programmable
+  surfaces. What it does publish, unusually for this cohort, is the source code and deployment
+  state of the applications behind them — bibdata.princeton.edu prints its own indexing timestamps
+  and deployed commit, and every Library application is open source under github.com/pulibrary.
+  Version transparency here comes from the repository, not from a versioning policy.
+versioning:
+  scheme: uri-path
+  detail: >-
+    The Allsearch API serves its contract at /api-docs/v1/swagger.yaml with info.version "v1";
+    the paths themselves are unversioned. The OIT gateway versions in the path segment
+    (e.g. /active-directory/1.0.6/). The Art Museum API is unversioned, and its documentation
+    warns that the currently open access model "may change in future versions".
+  docs: https://allsearch-api.princeton.edu/api-docs
+deprecation:
+  policy_url: null
+  sunset_header: false
+  observed:
+  - surface: https://api-store.princeton.edu/store/
+    event: removed
+    detail: >-
+      The OIT API Store developer portal no longer resolves — NXDOMAIN as of 2026-08-19. It was
+      recorded as a live DeveloperPortal in this repo's June 2026 profile and was still being
+      referenced in PUL's own operational docs (pulibrary/lib_jobs). No redirect, no sunset
+      notice, no successor portal published. The gateway behind it (api.princeton.edu) is still up.
+  - surface: https://dataspace.princeton.edu
+    event: superseding
+    detail: >-
+      DataSpace content is migrating to Princeton Data Commons
+      (datacommons.princeton.edu). Both remain live; no cutover date is published.
+sla:
+  url: null
+status_page: null
+release_transparency:
+  - surface: https://bibdata.princeton.edu/
+    detail: >-
+      Prints its deployed branch, commit SHA and last-deploy date in the page footer, plus live
+      Solr index timestamps. Verified 200 on 2026-08-19 showing "main last updated 12 August 2026".
+  - surface: https://allsearch-api.princeton.edu/
+    detail: >-
+      Root document returns {application, environment, github_link, documentation}, naming the
+      production environment and linking its own source repository.
+deprecated_operations: []

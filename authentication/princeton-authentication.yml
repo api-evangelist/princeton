@@ -1,0 +1,73 @@
+generated: '2026-08-19'
+method: probed
+source: live Princeton-operated hosts, probed 2026-08-19
+x-operator: institution
+note: >-
+  Princeton's programmable surface splits cleanly into two authentication postures: the Library's
+  public discovery APIs, which require nothing at all, and the OIT enterprise gateway, which
+  requires a NetID or service-account OAuth2 token and is unreachable to the public. Recorded from
+  probes and from the published OpenAPI, not from a marketing page.
+summary:
+  types: [none, oauth2, saml]
+  api_key_in: []
+  oauth2_flows: [client_credentials]
+schemes:
+- name: NoAuthentication
+  type: none
+  applies_to:
+  - Princeton University Library Allsearch API (allsearch-api.princeton.edu)
+  - Princeton University Art Museum API (data.artmuseum.princeton.edu)
+  - Blacklight discovery JSON (catalog / figgy / dpul / findingaids / maps / datacommons)
+  description: >-
+    No credential of any kind. The Allsearch OpenAPI declares no securitySchemes and no security
+    block, and anonymous GETs returned 200 on every probed path. The Art Museum documentation
+    states plainly that "no authentication is currently required to access the API, however this
+    may change in future versions" — an honest forward-looking caveat, recorded as such.
+  x-operator: institution
+  verified:
+  - url: https://allsearch-api.princeton.edu/search/catalog?query=climate
+    status: 200
+  - url: https://data.artmuseum.princeton.edu/objects/9449/tombstone
+    status: 200
+- name: PrincetonAPIGatewayOAuth2
+  type: oauth2
+  flow: client_credentials
+  applies_to:
+  - Princeton OIT API Gateway (api.princeton.edu)
+  description: >-
+    The OIT enterprise gateway runs WSO2 API Manager (probes return an am:fault envelope in the
+    http://wso2.org/apimanager namespace). Calls without a bearer token return 401 with an empty
+    body. Subscription requires a Princeton NetID or a departmental service account, so the
+    surface is gated to the campus community rather than to the public. The API Store portal that
+    used to front it, api-store.princeton.edu, no longer resolves (NXDOMAIN as of 2026-08-19).
+  x-operator: institution
+  verified:
+  - url: https://api.princeton.edu/active-directory/1.0.6/users
+    status: 401
+  - url: https://api.princeton.edu/registrar/course-offerings
+    status: 404
+    note: WSO2 am:fault "No matching resource found" — the gateway is live, this path is not published.
+- name: ShibbolethSAML
+  type: saml
+  applies_to:
+  - Princeton campus web single sign-on (idp.princeton.edu)
+  description: >-
+    Institutional web SSO is Shibboleth/SAML 2.0. The IdP publishes signed metadata at
+    https://idp.princeton.edu/idp/shibboleth (SAML 2.0 + SAML 1.1 protocol support,
+    shibmd:Scope, signing and encryption keys). This is the only identity contract Princeton
+    publishes machine-readably, and it is entirely institution-operated.
+  x-operator: institution
+  verified:
+  - url: https://idp.princeton.edu/idp/shibboleth
+    status: 200
+- name: CASLogin
+  type: cas
+  applies_to:
+  - Princeton University Library staff applications (bibdata.princeton.edu)
+  description: >-
+    PUL applications expose a staff login at /users/auth/cas backed by Princeton CAS. Public read
+    operations on those hosts do not require it; write and administrative operations do.
+  x-operator: institution
+  verified:
+  - url: https://bibdata.princeton.edu/
+    status: 200

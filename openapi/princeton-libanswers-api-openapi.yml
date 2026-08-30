@@ -1,0 +1,61 @@
+openapi: 3.2.0
+info:
+  title: Allsearch Libanswers API
+  description: Backend API for allsearch.princeton.edu
+  version: v1
+servers:
+- url: https://allsearch-api.princeton.edu
+- url: https://allsearch-api-staging.princeton.edu
+tags:
+- name: Libanswers
+paths:
+  /search/libanswers:
+    parameters:
+    - name: query
+      in: query
+      description: A string to query Libanswers
+      schema:
+        type: string
+    get:
+      summary: /search/libanswers?query={query}
+      tags:
+      - Libanswers
+      operationId: searchLibanswers
+      description: Searches the Libanswers FAQs using a query term
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                number: 2
+                records:
+                - title: Color printer?
+                  id: '11559'
+                  type: FAQ
+                  url: https://faq.library.princeton.edu/faq/11559
+                  other_fields:
+                    topics: Library Information and Policies and Technology
+                - title: Printing from laptop to a library printer?
+                  id: '11210'
+                  type: FAQ
+                  url: https://faq.library.princeton.edu/econ/faq/11210
+                  other_fields:
+                    topics: Technical issues
+                more: https://faq.library.princeton.edu/search/?t=0&q=printer
+        '400':
+          description: with a search query that only contains whitespace
+          content:
+            application/json:
+              example:
+                error:
+                  problem: QUERY_IS_EMPTY
+                  message: The query param must contain non-whitespace characters.
+        '500':
+          description: when the system can't authenticate with libanswers
+          content:
+            application/json:
+              example:
+                error:
+                  problem: UPSTREAM_ERROR
+                  message: Could not generate a valid authentication token with upstream service.

@@ -1,0 +1,286 @@
+openapi: 3.2.0
+info:
+  title: Princeton University Art Museum Objects API
+  version: '1.0'
+  summary: Open, no-authentication REST access to the Princeton University Art Museum collections.
+  description: 'REST-style service providing developer access to data about the Princeton University Art Museum and its collections. Four resource surfaces are documented: objects (art objects and their tombstone records), makers (artists, cultural groups and other makers), packages (curated groupings) and a full-text search endpoint backed by Elasticsearch. All responses are JSON. No authentication is currently required, though the Museum notes this may change.
+
+    PROVENANCE: the Museum publishes prose documentation in a GitHub repository, not a machine readable contract. This OpenAPI was DERIVED by API Evangelist from that documentation and verified against live responses on 2026-08-19; it was not published by Princeton. Paths, parameters and status codes below were each exercised against the production host.'
+  contact:
+    name: Princeton University Art Museum API
+    url: https://github.com/Princeton-University-Art-Museum/puam-api-docs
+  x-operator: institution
+  x-provenance:
+    method: derived
+    source: https://github.com/Princeton-University-Art-Museum/puam-api-docs
+    derived_by: API Evangelist university pipeline
+    verified_against: https://data.artmuseum.princeton.edu
+    verified: '2026-08-19'
+servers:
+- url: https://data.artmuseum.princeton.edu
+  description: Production collections data host (verified 200, 2026-08-19)
+tags:
+- name: Objects
+  description: Art objects in the Museum's collection.
+paths:
+  /objects/{id}:
+    get:
+      tags:
+      - Objects
+      operationId: getObjectById
+      summary: Get a single art object by ID
+      description: Returns the full record for one art object, including titles, makers, depicted subjects, texts, terms and image references.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Numeric objectid.
+        schema:
+          type: integer
+        example: 9449
+      responses:
+        '200':
+          description: The art object record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtObject'
+        '404':
+          description: No object with that ID.
+  /objects/{id}/tombstone:
+    get:
+      tags:
+      - Objects
+      operationId: getObjectTombstone
+      summary: Get the tombstone (label) record for an object
+      description: Returns the abbreviated "tombstone" record — the caption-level fields a gallery label carries.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 9449
+      responses:
+        '200':
+          description: Tombstone record.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: No object with that ID.
+  /objects:
+    get:
+      tags:
+      - Objects
+      operationId: listObjects
+      summary: Get multiple objects by filter
+      description: Returns all object records matching the selected criteria. Filter by maker, department, term or on-view status, then control the result window with size/from/sort/sortorder and harvest incrementally with lastupdated.
+      parameters:
+      - name: maker
+        in: query
+        description: Maker ID.
+        schema:
+          type: integer
+        example: 6353
+      - name: department
+        in: query
+        description: Exact department name.
+        schema:
+          type: string
+      - name: term
+        in: query
+        description: Term ID.
+        schema:
+          type: integer
+      - name: onview
+        in: query
+        description: Restrict to objects currently on view.
+        schema:
+          type: boolean
+      - name: size
+        in: query
+        description: Maximum records per response (default 10, maximum 500).
+        schema:
+          type: integer
+          default: 10
+          maximum: 500
+      - name: from
+        in: query
+        description: Offset of the first result, for pagination.
+        schema:
+          type: integer
+          default: 0
+      - name: sort
+        in: query
+        description: Field to sort on. Defaults to relevance score.
+        schema:
+          type: string
+      - name: sortorder
+        in: query
+        description: Sort direction.
+        schema:
+          type: string
+          enum:
+          - ASC
+          - DESC
+          default: DESC
+      - name: lastupdated
+        in: query
+        description: Return objects updated on or after this date (YYYY-MM-DD). The incremental-harvest parameter.
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Matching object records.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ArtObject'
+        '400':
+          description: Bad Request — returned as a plain-text body, not JSON, when the filter set is not accepted (for example size supplied with no filter parameter). Verified 2026-08-19.
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Bad Request
+components:
+  schemas:
+    ArtObject:
+      type: object
+      description: An art object in the Museum's collection.
+      properties:
+        type:
+          type: string
+          examples:
+          - artobject
+        objectid:
+          type: integer
+        objectnumber:
+          type: string
+        sortnumber:
+          type: string
+        displaytitle:
+          type: string
+        department:
+          type: string
+        classification:
+          type: string
+        datebegin:
+          type:
+          - integer
+          - 'null'
+        dateend:
+          type:
+          - integer
+          - 'null'
+        datecomputed:
+          type:
+          - integer
+          - 'null'
+        daterange:
+          type:
+          - string
+          - 'null'
+        displaydate:
+          type:
+          - string
+          - 'null'
+        medium:
+          type:
+          - string
+          - 'null'
+        dimensions:
+          type:
+          - string
+          - 'null'
+        creditline:
+          type:
+          - string
+          - 'null'
+        markings:
+          type:
+          - string
+          - 'null'
+        inscribed:
+          type:
+          - string
+          - 'null'
+        signed:
+          type:
+          - string
+          - 'null'
+        restrictions:
+          type:
+          - string
+          - 'null'
+        on_view:
+          type: boolean
+        accessionyear:
+          type:
+          - string
+          - 'null'
+        titles:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              titletype:
+                type: string
+              displayorder:
+                type: integer
+        makers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectMaker'
+        depicted:
+          type: array
+          items:
+            type: object
+        texts:
+          type: array
+          items:
+            type: object
+    ObjectMaker:
+      type: object
+      properties:
+        id:
+          type: integer
+        displayname:
+          type: string
+        displaydate:
+          type:
+          - string
+          - 'null'
+        datebegin:
+          type:
+          - integer
+          - 'null'
+        dateend:
+          type:
+          - integer
+          - 'null'
+        prefix:
+          type:
+          - string
+          - 'null'
+        suffix:
+          type:
+          - string
+          - 'null'
+        role:
+          type:
+          - string
+          - 'null'
+        displaymaker:
+          type:
+          - string
+          - 'null'
+        displayorder:
+          type: integer

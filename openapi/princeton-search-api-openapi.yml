@@ -1,0 +1,96 @@
+openapi: 3.2.0
+info:
+  title: Princeton University Art Museum Search API
+  version: '1.0'
+  summary: Open, no-authentication REST access to the Princeton University Art Museum collections.
+  description: 'REST-style service providing developer access to data about the Princeton University Art Museum and its collections. Four resource surfaces are documented: objects (art objects and their tombstone records), makers (artists, cultural groups and other makers), packages (curated groupings) and a full-text search endpoint backed by Elasticsearch. All responses are JSON. No authentication is currently required, though the Museum notes this may change.
+
+    PROVENANCE: the Museum publishes prose documentation in a GitHub repository, not a machine readable contract. This OpenAPI was DERIVED by API Evangelist from that documentation and verified against live responses on 2026-08-19; it was not published by Princeton. Paths, parameters and status codes below were each exercised against the production host.'
+  contact:
+    name: Princeton University Art Museum API
+    url: https://github.com/Princeton-University-Art-Museum/puam-api-docs
+  x-operator: institution
+  x-provenance:
+    method: derived
+    source: https://github.com/Princeton-University-Art-Museum/puam-api-docs
+    derived_by: API Evangelist university pipeline
+    verified_against: https://data.artmuseum.princeton.edu
+    verified: '2026-08-19'
+servers:
+- url: https://data.artmuseum.princeton.edu
+  description: Production collections data host (verified 200, 2026-08-19)
+tags:
+- name: Search
+  description: Full-text search across all collection data types.
+paths:
+  /search:
+    get:
+      tags:
+      - Search
+      operationId: searchCollections
+      summary: Full-text search across collection data
+      description: Full-text search over the Museum's data. The response is the raw Elasticsearch result envelope — took, timed_out, _shards and hits — rather than a Museum-specific shape.
+      parameters:
+      - name: q
+        in: query
+        required: true
+        description: Search term(s).
+        schema:
+          type: string
+        example: monet
+      - name: type
+        in: query
+        description: Data type to search. Use `all` to search every type.
+        schema:
+          type: string
+        example: all
+      responses:
+        '200':
+          description: Elasticsearch search envelope.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+components:
+  schemas:
+    SearchResponse:
+      type: object
+      description: Raw Elasticsearch response envelope.
+      properties:
+        took:
+          type: integer
+        timed_out:
+          type: boolean
+        _shards:
+          type: object
+          properties:
+            total:
+              type: integer
+            successful:
+              type: integer
+            failed:
+              type: integer
+        hits:
+          type: object
+          properties:
+            total:
+              type: integer
+            max_score:
+              type:
+              - number
+              - 'null'
+            hits:
+              type: array
+              items:
+                type: object
+                properties:
+                  _index:
+                    type: string
+                  _type:
+                    type: string
+                  _id:
+                    type: string
+                  _score:
+                    type: number
+                  _source:
+                    type: object

@@ -1,0 +1,69 @@
+openapi: 3.2.0
+info:
+  title: Allsearch Pulmap API
+  description: Backend API for allsearch.princeton.edu
+  version: v1
+servers:
+- url: https://allsearch-api.princeton.edu
+- url: https://allsearch-api-staging.princeton.edu
+tags:
+- name: Pulmap
+paths:
+  /search/pulmap:
+    parameters:
+    - name: query
+      in: query
+      description: A string to query Pulmap
+      schema:
+        type: string
+    get:
+      summary: /search/pulmap?query={query}
+      tags:
+      - Pulmap
+      operationId: searchPulmap
+      description: Searches Pulmap using a query term
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                number: 16
+                records:
+                - title: Indiana.
+                  publisher: Scribner
+                  id: 70a5c49d-bc87-4789-8dc0-c605a397e698
+                  type: JPEG
+                  description: 'Shows railroads and canals.; Compiled according to Census of 1880 and latest surveys.; From: Encyclopaedia Britannica, 9th ed. Vol. XII, plate VII. Scale approximately 1:2,000,000'
+                  url: https://maps.princeton.edu/catalog/70a5c49d-bc87-4789-8dc0-c605a397e698
+                  other_fields:
+                    rights: Public
+                - title: 'South America : wall-atlas'
+                  creator: Guyot, A. (Arnold), 1807-1884
+                  publisher: 'New York : Published by Scribner, Armstrong & Co. ... [between 1871 and 1879].'
+                  id: princeton-6682x6396
+                  type: TIFF
+                  description: '"Card series." Relief shown by hachures and form lines. "Entered according to Act of Congress in the year 1865 by Charles Scribner & Co. ..." Inset: Profiles from west to east. Wall map. Scribner, Armstrong, & Co. flourished ca. 1871-1879. cf. Tooley''s dictionary of mapmakers.'
+                  url: https://maps.princeton.edu/catalog/princeton-6682x6396
+                  other_fields:
+                    rights: Public
+                    layer_geom_type: Image
+                - title: 'Africa : wall-atlas'
+                  creator: Guyot, A. (Arnold), 1807-1884
+                  publisher: 'New York : Scribner, Armstrong, & Co. [between 1871 and 1879].'
+                  id: princeton-2b88qf00b
+                  type: TIFF
+                  description: '"Card series." Relief shown by hachures and form lines. "Entered according to Act of Congress in the year 1865 by Charles Scribner & Co. ..." Insets: Profiles from north to south -- Profiles from east to west. Wall map. Scribner, Armstrong, & Co. flourished ca. 1871-1879. cf. Tooley''s dictionary of mapmakers.'
+                  url: https://maps.princeton.edu/catalog/princeton-2b88qf00b
+                  other_fields:
+                    rights: Public
+                    layer_geom_type: Image
+                more: https://maps.princeton.edu/catalog?q=scribner&search_field=all_fields
+        '400':
+          description: with a search query that only contains whitespace
+          content:
+            application/json:
+              example:
+                error:
+                  problem: QUERY_IS_EMPTY
+                  message: The query param must contain non-whitespace characters.

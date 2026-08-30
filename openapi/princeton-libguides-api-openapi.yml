@@ -1,0 +1,73 @@
+openapi: 3.2.0
+info:
+  title: Allsearch Libguides API
+  description: Backend API for allsearch.princeton.edu
+  version: v1
+servers:
+- url: https://allsearch-api.princeton.edu
+- url: https://allsearch-api-staging.princeton.edu
+tags:
+- name: Libguides
+paths:
+  /search/libguides:
+    parameters:
+    - name: query
+      in: query
+      description: A string to query Libguides
+      schema:
+        type: string
+    get:
+      summary: /search/libguides?query={query}
+      tags:
+      - Libguides
+      operationId: searchLibguides
+      description: Searches the Libguides research guides using a query term
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                number: 59
+                records:
+                - title: Asian American Studies
+                  creator: Steven Knowlton
+                  publisher: Princeton University Library
+                  id: '84140'
+                  type: General Purpose Guide
+                  description: A guide to print and electronic resources in Princeton University Library.
+                  url: https://libguides.princeton.edu/asianamericans
+                  other_fields: {}
+                - title: East Asian Studies Links
+                  creator: Martin Heijdra
+                  publisher: Princeton University Library
+                  id: '361989'
+                  type: Topic Guide
+                  description: Links to East Asian Resources
+                  url: https://libguides.princeton.edu/eallinks
+                  other_fields: {}
+                - title: South Asian Studies
+                  creator: Ellen Ambrosone
+                  publisher: Princeton University Library
+                  id: '929471'
+                  type: Subject Guide
+                  description: ''
+                  url: https://libguides.princeton.edu/sas
+                  other_fields: {}
+                more: https://libguides.princeton.edu/srch.php?q=Asian American Studies
+        '400':
+          description: with a search query that only contains whitespace
+          content:
+            application/json:
+              example:
+                error:
+                  problem: QUERY_IS_EMPTY
+                  message: The query param must contain non-whitespace characters.
+        '500':
+          description: when the system can't authenticate with libguides
+          content:
+            application/json:
+              example:
+                error:
+                  problem: UPSTREAM_ERROR
+                  message: Could not generate a valid authentication token with upstream service.

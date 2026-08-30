@@ -1,0 +1,79 @@
+openapi: 3.2.0
+info:
+  title: Allsearch Art Museum API
+  description: Backend API for allsearch.princeton.edu
+  version: v1
+servers:
+- url: https://allsearch-api.princeton.edu
+- url: https://allsearch-api-staging.princeton.edu
+tags:
+- name: Art Museum
+paths:
+  /search/artmuseum:
+    parameters:
+    - name: query
+      in: query
+      description: A string to query the Art Museum
+      schema:
+        type: string
+    get:
+      summary: /search/artmuseum?query={query}
+      tags:
+      - Art Museum
+      operationId: searchArtmuseum
+      description: Searches the Art Museum using a query term
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                number: 263
+                records:
+                - title: Two cats
+                  creator: Theophile-Alexandre Steinlen, 1859–1923; born Lausanne, Switzerland; died Paris, France
+                  id: '6463'
+                  type: artobjects
+                  url: https://artmuseum.princeton.edu/collections/objects/6463
+                  other_fields:
+                    credit_line: Bequest of Dan Fellows Platt, Class of 1895
+                    medium: Graphite
+                    dimensions: 25.1 × 26.2 cm. (9 7/8 × 10 5/16 in.)
+                    primary_image: https://puam-loris.aws.princeton.edu/loris/INV34694.jp2?a=b&c=d
+                    object_number: x1948-1210
+                    date: '1900'
+                - title: Cats Tales
+                  creator: Peter Finnemore, British (Welsh), born 1963
+                  id: '40016'
+                  type: artobjects
+                  url: https://artmuseum.princeton.edu/collections/objects/40016
+                  other_fields:
+                    credit_line: Gift of the artist
+                    medium: Gelatin silver print
+                    dimensions: 'image: 19.8 x 28.1 cm (7 13/16 x 11 1/16 in.)
+
+                      sheet: 27.5 x 33 cm (10 13/16 x 13 in.)'
+                    primary_image: https://puam-loris.aws.princeton.edu/loris/INV11648.jp2
+                    object_number: 2001-158
+                    date: '1994'
+                - title: Two Cats
+                  creator: Francisco Toledo, 1940–2019, born Juchitan, Oaxaca, Mexico; died Oaxaca City, Mexico; active Oaxaca City
+                  id: '40222'
+                  type: artobjects
+                  url: https://artmuseum.princeton.edu/collections/objects/40222
+                  other_fields:
+                    credit_line: Bequest of David L. Meginnity, Class of 1958
+                    medium: "Recto: Black ink and watercolor \nVerso: Black ink and watercolor"
+                    dimensions: 28 x 38 cm (11 x 14 15/16 in.)
+                    primary_image: https://puam-loris.aws.princeton.edu/loris/PUAMSTU2018-1959213.jp2
+                    object_number: 2001-120
+                    date: '1993'
+                more: https://artmuseum.princeton.edu/search/collections?mainSearch=%22cats%22
+        '400':
+          description: with a search query that only contains whitespace
+          content:
+            application/json:
+              example:
+                error:
+                  problem: QUERY_IS_EMPTY
+                  message: The query param must contain non-whitespace characters.

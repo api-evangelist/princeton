@@ -1,0 +1,78 @@
+openapi: 3.2.0
+info:
+  title: Allsearch Catalog API
+  description: Backend API for allsearch.princeton.edu
+  version: v1
+servers:
+- url: https://allsearch-api.princeton.edu
+- url: https://allsearch-api-staging.princeton.edu
+tags:
+- name: Catalog
+paths:
+  /search/catalog:
+    parameters:
+    - name: query
+      in: query
+      description: A string to query the Catalog
+      schema:
+        type: string
+    get:
+      summary: /search/catalog?query={query}
+      tags:
+      - Catalog
+      operationId: searchCatalog
+      description: Searches the Catalog using a query term
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                number: 7
+                records:
+                - title: 'Rub''ix qatinamit = El canto del pueblo : Estudiantina del Instituto Indígena de Santiago / [Oscar Azmitia, Manuel Salazar].'
+                  creator: Azmitia, Oscar
+                  publisher: '[Guatemala] : El Instituto, [199-]'
+                  id: SCSB-11568989
+                  type: Book
+                  url: https://catalog.princeton.edu/catalog/SCSB-11568989
+                  other_fields:
+                    first_barcode: HNG4XF
+                    first_call_number: ML421.I55 A96 1990z
+                    first_library: ReCAP
+                    online_access_count: '0'
+                - title: 'COVID-19 and minority health access : illustrating symptomatic cases from reported minority communities and healthcare gaps due to COVID-19.'
+                  publisher: '[Lawrence, Mass.] : Rubix Life Sciences, 2020.'
+                  id: '99122566163506421'
+                  type: Book
+                  url: https://catalog.princeton.edu/catalog/99122566163506421
+                  other_fields:
+                    online_access_count: '0'
+                - title: Perspectives.
+                  publisher: 'Chicago, IL : Cedille Records, [2022]'
+                  id: '99126854831206421'
+                  type: Audio
+                  url: https://catalog.princeton.edu/catalog/99126854831206421
+                  other_fields:
+                    first_barcode: '32101119118782'
+                    first_call_number: CD- 53772
+                    first_library: Mendel Music Library
+                    first_status: Available
+                    online_access_count: '0'
+                more: https://catalog.princeton.edu/catalog?q=rubix&search_field=all_fields
+        '400':
+          description: with a search query that only contains whitespace
+          content:
+            application/json:
+              example:
+                error:
+                  problem: QUERY_IS_EMPTY
+                  message: The query param must contain non-whitespace characters.
+        '500':
+          description: with solr reporting 404
+          content:
+            application/json:
+              example:
+                error:
+                  problem: UPSTREAM_ERROR
+                  message: Solr returned a 404 for path /solr/catalog-alma-production/select on host lib-solr8-prod.princeton.edu

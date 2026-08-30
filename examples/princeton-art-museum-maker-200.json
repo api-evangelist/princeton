@@ -1,0 +1,42 @@
+{
+    "firstname": "Paul",
+    "nametitle": null,
+    "begindate": 1839,
+    "identifiers": [
+        {
+            "source": "ULAN",
+            "id": "500004793"
+        },
+        {
+            "source": "VIAF",
+            "id": "http://viaf.org/viaf/39374836"
+        }
+    ],
+    "middlename": null,
+    "biography": "Cezanne modulated warm and cool hues to depict depth and surface and used his constructive brushstroke, rather than perspective or foreshortening, to build up form and structure. Since 1890, his complex painting has influenced nearly every avant-garde movement in painting, including Cubism and abstract art. In his early career, he was strongly influenced by Delacroix and Courbet, using thick slabs of paint to give his early works a sculptural presence and intensity. He exhibited with the Impressionists, but eventually rejected what he considered the Impressionists' lack of structure, declaring his intention to make Impressionism into \"something solid and durable, like the art of museums.\" French artist (ULAN).",
+    "type": "maker",
+    "suffix": null,
+    "lastname": "C\u00e9zanne",
+    "culturegroup": null,
+    "enddate": 1906,
+    "nationality": "French",
+    "displayname": "Paul C\u00e9zanne",
+    "alphasort": "C\u00e9zanne, Paul",
+    "makertype": "Individual",
+    "displaybio": "1839\u20131906; born and died Aix-en-Provence, France",
+    "published_date": "2023-03-29 02:04:49.320523",
+    "makerid": 6353,
+    "altnames": [
+        {
+            "nametype": "Primary Name",
+            "displayname": "Paul C\u00e9zanne",
+            "alphasort": "C\u00e9zanne, Paul",
+            "lastname": "C\u00e9zanne",
+            "firstname": "Paul",
+            "nametitle": null,
+            "middlename": null,
+            "suffix": null,
+            "culturegroup": null
+        }
+    ]
+}

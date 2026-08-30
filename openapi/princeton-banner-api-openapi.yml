@@ -1,0 +1,29 @@
+openapi: 3.2.0
+info:
+  title: Allsearch Banner API
+  description: Backend API for allsearch.princeton.edu
+  version: v1
+servers:
+- url: https://allsearch-api.princeton.edu
+- url: https://allsearch-api-staging.princeton.edu
+tags:
+- name: Banner
+paths:
+  /banner:
+    get:
+      summary: /banner
+      tags:
+      - Banner
+      operationId: displayBanner
+      description: Displays the current settings for the banner
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                text: ''
+                display_banner: false
+                alert_status: info
+                dismissible: true
+                autoclear: false

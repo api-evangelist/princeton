@@ -1,0 +1,41 @@
+openapi: 3.2.0
+info:
+  title: Allsearch Library Staff API
+  description: Backend API for allsearch.princeton.edu
+  version: v1
+servers:
+- url: https://allsearch-api.princeton.edu
+- url: https://allsearch-api-staging.princeton.edu
+tags:
+- name: Library Staff
+paths:
+  /search/staff:
+    parameters:
+    - name: query
+      in: query
+      description: A string to query the Library Staff
+      schema:
+        type: string
+    get:
+      summary: /search/staff?query={query}
+      tags:
+      - Library Staff
+      operationId: searchStaff
+      description: Searches for relevant Library Staff using a query term
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                number: 0
+                records: []
+                more: https://library.princeton.edu/about/staff-directory?combine=Lucy
+        '400':
+          description: with a search query that only contains whitespace
+          content:
+            application/json:
+              example:
+                error:
+                  problem: QUERY_IS_EMPTY
+                  message: The query param must contain non-whitespace characters.

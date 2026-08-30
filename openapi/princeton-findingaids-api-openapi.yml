@@ -1,0 +1,74 @@
+openapi: 3.2.0
+info:
+  title: Allsearch Findingaids API
+  description: Backend API for allsearch.princeton.edu
+  version: v1
+servers:
+- url: https://allsearch-api.princeton.edu
+- url: https://allsearch-api-staging.princeton.edu
+tags:
+- name: Findingaids
+paths:
+  /search/findingaids:
+    parameters:
+    - name: query
+      in: query
+      description: A string to query Findingaids
+      schema:
+        type: string
+    get:
+      summary: /search/findingaids?query={query}
+      tags:
+      - Findingaids
+      operationId: searchFindingaids
+      description: Searches Findingaids using a query term
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              example:
+                number: 325
+                records:
+                - title: Edward Anthony Papers, 1920s -1950s
+                  creator: Anthony, Edward, 1895-1971
+                  id: TC125
+                  type: collection
+                  description: Edward Anthony was a noted writer and publisher in the twentieth century, known primarily for his light verse. His papers include several manuscripts, including an autobiography co-authored with Clyde Beatty about circus animal training and a collection of poems. A few miscellaneous papers, such as letters and a date book from 1928 complete the collection.
+                  url: https://findingaids.princeton.edu/catalog/TC125
+                  other_fields:
+                    access_restriction: Collection is open for research use.
+                    date: 1920s -1950s
+                    extent: 2 boxes and 0.8 linear feet
+                    repository: Manuscripts Division
+                - title: Massachusetts Elementary School Student Compositions Collection, 1866-1880
+                  creator: Princeton University. Library. Special Collections
+                  id: C0969
+                  type: collection
+                  description: The Massachusetts Elementary School Student Compositions Collection consists of short, nineteenth-century essays on a variety of topics written by children from Wilbraham, Massachusetts.
+                  url: https://findingaids.princeton.edu/catalog/C0969
+                  other_fields:
+                    access_restriction: Collection is open for research use.
+                    date: 1866-1880
+                    extent: 1 box and 0.2 linear feet
+                    repository: Manuscripts Division
+                - title: Whiting Willauer Papers, 1916-1962 (mostly 1941-1955)
+                  creator: Willauer, Whiting, 1906-1962
+                  id: MC142
+                  type: collection
+                  description: The papers of Whiting Willauer (1906-1962) reflect Willauer's entire career, but focus most strongly on the period from 1941 to 1954 when Willauer was in China and worked for China Defense Supplies, Inc. (1941-1944), the Foreign Economic Administration (1944-1945), the United Nations Relief and Rehabilitation Administration [NRRA] (1946-1947), and Civil Air Transport, Inc. (1946-1954). The papers also document his positions as an admiralty lawyer for the New York City law firm, Bingham, Dana and Gould (1931-1938), as Attorney, Criminal Division at the Department of Justice and Special Assistant to United States Attorney General (1929-1940), Special Counsel for the Federal Power Commission (1941), and his appointments as United States Ambassador to Honduras (1954-1958) and Costa Rica (1958-1961). In addition, materials which reflect Willauer's role as a delegate to the Organization of American States' Meetings of Foreign Ministers (August 1960) and to the United Nations General Assembly (October 1960) are found in the papers.
+                  url: https://findingaids.princeton.edu/catalog/MC142
+                  other_fields:
+                    access_restriction: Collection is open for research use.
+                    date: 1916-1962 (mostly 1941-1955)
+                    extent: 10 boxes and 1 folder
+                    repository: Public Policy Papers
+                more: https://findingaids.princeton.edu/catalog?q=cats&search_field=all_fields
+        '400':
+          description: with a search query that only contains whitespace
+          content:
+            application/json:
+              example:
+                error:
+                  problem: QUERY_IS_EMPTY
+                  message: The query param must contain non-whitespace characters.

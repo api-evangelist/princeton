@@ -1,0 +1,25 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  https://allsearch-api.princeton.edu/api-docs/v1/swagger.yaml and probes against
+  api.princeton.edu, 2026-08-19
+x-operator: institution
+note: >-
+  Princeton publishes no OAuth scope catalog. This file records that as a measured absence rather
+  than leaving the slot empty and unexplained.
+summary:
+  scopes_published: false
+  oauth2_flows_documented: []
+  authorization_model: >-
+    Two-state, not scoped. The Library's public APIs require nothing; the OIT gateway requires a
+    NetID or service-account subscription per API. Access is granted at the API-subscription level
+    inside WSO2 API Manager, so entitlement is per-API rather than per-scope, and the subscription
+    catalog is not published outside the campus network.
+scopes: []
+evidence:
+- url: https://allsearch-api.princeton.edu/api-docs/v1/swagger.yaml
+  status: 200
+  note: OpenAPI 3.1.1 with no components and no securitySchemes — nothing to scope.
+- url: https://api.princeton.edu/active-directory/1.0.6/users
+  status: 401
+  note: Gateway rejects anonymous calls with an empty body and no WWW-Authenticate scope hint.

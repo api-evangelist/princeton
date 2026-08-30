@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/princeton/refs/heads/main/json-schema/princeton-allsearch-search-response.json",
+  "title": "Princeton Allsearch search response",
+  "description": "Uniform response envelope returned by every /search/{target} operation of the Princeton University Library Allsearch API. Derived from the institution's own OpenAPI 3.1.1 examples and verified against live 200 responses on 2026-08-19. The API declares no components/schemas, so this schema is API Evangelist's, not Princeton's.",
+  "x-provenance": {
+    "generated": "2026-08-19",
+    "method": "derived",
+    "source": "https://allsearch-api.princeton.edu/api-docs/v1/swagger.yaml",
+    "verified_against": "https://allsearch-api.princeton.edu/search/catalog?query=climate",
+    "x-operator": "institution"
+  },
+  "type": "object",
+  "required": ["number", "records"],
+  "properties": {
+    "number": {
+      "type": "integer",
+      "description": "Total number of matching records in the underlying index, not the number returned.",
+      "minimum": 0
+    },
+    "records": {
+      "type": "array",
+      "description": "The result window. Length is fixed by the service; the API exposes no page or size parameter.",
+      "items": { "$ref": "#/$defs/Record" }
+    },
+    "more": {
+      "type": "string",
+      "format": "uri",
+      "description": "Deep link into the human-facing application that owns this result set (catalog.princeton.edu, findingaids.princeton.edu, dpul.princeton.edu, maps.princeton.edu, …). This is the API's only pagination affordance: it hands the caller back to the web UI."
+    }
+  },
+  "$defs": {
+    "Record": {
+      "type": "object",
+      "description": "One search hit. The core five fields are stable across every target; everything target-specific is pushed into other_fields.",
+      "required": ["title", "id", "url"],
+      "properties": {
+        "title": { "type": "string" },
+        "creator": { "type": "string", "description": "Author, artist or maker. Absent for records that have none." },
+        "publisher": { "type": "string" },
+        "id": { "type": "string", "description": "Identifier in the owning system (e.g. an Alma MMS ID for catalog records)." },
+        "type": { "type": "string", "description": "Record type as the owning system names it — Book, Journal, artobjects, and so on. Not a controlled vocabulary shared across targets." },
+        "url": { "type": "string", "format": "uri", "description": "Canonical human-facing URL for the record." },
+        "other_fields": {
+          "type": "object",
+          "description": "Open bag of target-specific fields. Untyped by design; keys observed include online_access_count, resource_url, resource_url_label, first_barcode, first_call_number, first_library, first_status, credit_line, medium, dimensions, primary_image, object_number, date.",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

@@ -1,0 +1,92 @@
+openapi: 3.2.0
+info:
+  title: Princeton University Art Museum Makers API
+  version: '1.0'
+  summary: Open, no-authentication REST access to the Princeton University Art Museum collections.
+  description: 'REST-style service providing developer access to data about the Princeton University Art Museum and its collections. Four resource surfaces are documented: objects (art objects and their tombstone records), makers (artists, cultural groups and other makers), packages (curated groupings) and a full-text search endpoint backed by Elasticsearch. All responses are JSON. No authentication is currently required, though the Museum notes this may change.
+
+    PROVENANCE: the Museum publishes prose documentation in a GitHub repository, not a machine readable contract. This OpenAPI was DERIVED by API Evangelist from that documentation and verified against live responses on 2026-08-19; it was not published by Princeton. Paths, parameters and status codes below were each exercised against the production host.'
+  contact:
+    name: Princeton University Art Museum API
+    url: https://github.com/Princeton-University-Art-Museum/puam-api-docs
+  x-operator: institution
+  x-provenance:
+    method: derived
+    source: https://github.com/Princeton-University-Art-Museum/puam-api-docs
+    derived_by: API Evangelist university pipeline
+    verified_against: https://data.artmuseum.princeton.edu
+    verified: '2026-08-19'
+servers:
+- url: https://data.artmuseum.princeton.edu
+  description: Production collections data host (verified 200, 2026-08-19)
+tags:
+- name: Makers
+  description: Artists, cultural groups and other makers.
+paths:
+  /makers/{id}:
+    get:
+      tags:
+      - Makers
+      operationId: getMakerById
+      summary: Get a single maker by ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 6353
+      responses:
+        '200':
+          description: The maker record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Maker'
+        '404':
+          description: No maker with that ID.
+components:
+  schemas:
+    Maker:
+      type: object
+      properties:
+        makerid:
+          type: integer
+        displayname:
+          type: string
+        displaybio:
+          type:
+          - string
+          - 'null'
+        culturegroup:
+          type:
+          - string
+          - 'null'
+        firstname:
+          type:
+          - string
+          - 'null'
+        middlename:
+          type:
+          - string
+          - 'null'
+        lastname:
+          type:
+          - string
+          - 'null'
+        alphasort:
+          type:
+          - string
+          - 'null'
+        begindate:
+          type:
+          - integer
+          - 'null'
+        enddate:
+          type:
+          - integer
+          - 'null'
+        altnames:
+          type: array
+          items:
+            type: object
