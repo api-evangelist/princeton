@@ -635,6 +635,8 @@ apis:
   humanURL: https://allsearch-api.princeton.edu/api-docs
   baseURL: https://allsearch-api.princeton.edu
   tags:
+  - Finding Aids
+  tags_raw:
   - Findingaids
   properties:
   - type: OpenAPI
@@ -731,6 +733,8 @@ apis:
   humanURL: https://allsearch-api.princeton.edu/api-docs
   baseURL: https://allsearch-api.princeton.edu
   tags:
+  - LibGuides
+  tags_raw:
   - Libguides
   properties:
   - type: OpenAPI
