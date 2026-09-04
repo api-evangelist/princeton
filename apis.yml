@@ -118,7 +118,7 @@ accessModel:
   note: >-
     Upgraded from `public: false` after probing. The Library's APIs are anonymously callable with
     no key, no registration and no rate-limit challenge; the OIT gateway remains NetID-gated.
-position: Provider
+position: Producing
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/princeton.png
 url: https://raw.githubusercontent.com/api-evangelist/princeton/refs/heads/main/apis.yml
