@@ -134,6 +134,19 @@ tags:
   - Open Data
   - Digital Collections
   - Identity Federation
+  - Museums
+tags_raw:
+  - University
+  - Higher Education
+  - Education
+  - Ivy League
+  - United States
+  - New Jersey
+  - Research Library
+  - Research Data
+  - Open Data
+  - Digital Collections
+  - Identity Federation
   - Museum
 created: '2026-06-03'
 modified: '2026-08-19'
@@ -155,7 +168,7 @@ apis:
   humanURL: https://github.com/Princeton-University-Art-Museum/puam-api-docs
   baseURL: https://data.artmuseum.princeton.edu
   tags:
-  - Museum
+  - Museums
   - Collection
   - Open Data
   - IIIF
@@ -201,7 +214,7 @@ apis:
   - Courses
   - Gated
   - Authentication
-  - Gateway
+  - Gateways
   tags_raw:
   - Identity
   - Directory
@@ -864,6 +877,8 @@ apis:
   humanURL: https://allsearch-api.princeton.edu/api-docs
   baseURL: https://allsearch-api.princeton.edu
   tags:
+  - Maker
+  tags_raw:
   - Makers
   properties:
   - type: OpenAPI
