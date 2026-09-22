@@ -1,32 +1,30 @@
-# Kin Score artifact — princeton — 2026-08-21T110057
+# Kin Score artifact — princeton — 2026-09-21T233935
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: princeton
-  schema_version: 0.12.0
-  scored_at: '2026-08-21'
-  run_ts: 2026-08-21T110057
-  composite: 38.7
-  band: thin
+  schema_version: 0.22.0
+  scored_at: '2026-09-21'
+  run_ts: 2026-09-21T233935
+  composite: 43.8
+  band: developing
   facets:
-    discoverability: 55.6
-    contract_quality: 44.6
-    governance: 29.5
-    operational_transparency: 26.3
-    developer_ergonomics: 13.1
-    commercial_clarity: 39.5
+    discoverability: 44.4
+    contract_quality: 58.4
     contract_governance: 29.5
+    operational_transparency: 23.7
+    developer_ergonomics: 28.6
     access_clarity: 39.5
   agent_readiness:
-    score: 36.3
+    score: 30.0
     band: agent-ready
     dimensions:
       spec_presence: true
       agentic_access: false
-      reversibility_documented: false
+      reversibility_documented: na
       mcp_server: false
-      auth_clarity: true
-      idempotency: false
+      auth_clarity: bearer
+      idempotency: na
       error_semantics: documented
       openapi_examples: verified
       rate_limit_signal: documented
@@ -35,7 +33,11 @@ kin_score:
       well_known_catalog: false
       consent_identity: false
       agent_card: false
-      dry_run_mode: false
+      dry_run_mode: na
+      delegated_identity: false
+      protected_resource_metadata: false
+      dynamic_client_registration: false
+      agentic_commerce: false
   regulatory:
     applies: true
     regime: Education & Research
@@ -45,7 +47,7 @@ kin_score:
   provenance:
     conformance: first-party
     contracts:
-      total: 2
-      derived: 1
-      coverage: 50.0
-      callable: 50.0
+      total: 18
+      derived: 4
+      coverage: 22.2
+      callable: 100.0
