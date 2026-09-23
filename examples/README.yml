@@ -1,0 +1,49 @@
+generated: '2026-08-19'
+method: probed
+source: live Princeton University hosts
+note: >-
+  Every file in this directory is a verbatim response captured from a Princeton-operated host on
+  2026-08-19. Nothing here is synthesised. Each entry records the exact URL, the status code
+  returned and the operator of the host that served it.
+examples:
+- file: princeton-allsearch-catalog-search-200.json
+  url: https://allsearch-api.princeton.edu/search/catalog?query=climate
+  status: 200
+  x-operator: institution
+  note: Allsearch API catalog search. Public, no authentication.
+- file: princeton-allsearch-empty-query-400.json
+  url: https://allsearch-api.princeton.edu/search/catalog
+  status: 400
+  x-operator: institution
+  note: >-
+    The API's own error envelope — {"error":{"problem":"QUERY_IS_EMPTY","message":"…"}}. A named,
+    machine-readable problem code, which is more error semantics than most of this cohort ships.
+- file: princeton-allsearch-banner-200.json
+  url: https://allsearch-api.princeton.edu/banner
+  status: 200
+  x-operator: institution
+  note: Site-banner endpoint; the only non-search operation in the contract.
+- file: princeton-art-museum-tombstone-200.json
+  url: https://data.artmuseum.princeton.edu/objects/9449/tombstone
+  status: 200
+  x-operator: institution
+  note: Art Museum tombstone (label-level) record.
+- file: princeton-art-museum-maker-200.json
+  url: https://data.artmuseum.princeton.edu/makers/6353
+  status: 200
+  x-operator: institution
+  note: Art Museum maker record (Paul Cezanne).
+- file: princeton-figgy-oai-identify.xml
+  url: https://figgy.princeton.edu/oai?verb=Identify
+  status: 200
+  x-operator: institution
+  note: >-
+    OAI-PMH 2.0 Identify response. repositoryName "Princeton University Library", adminEmail at
+    princeton.libanswers.com, earliestDatestamp 2017-10-06. This is the oai-pmh conformance evidence.
+- file: princeton-shibboleth-idp-metadata.xml
+  url: https://idp.princeton.edu/idp/shibboleth
+  status: 200
+  x-operator: institution
+  note: >-
+    SAML 2.0 EntityDescriptor for Princeton's Shibboleth identity provider. OrganizationDisplayName
+    "Princeton University", IAM and OIT contacts. This is the shibboleth + saml conformance evidence.

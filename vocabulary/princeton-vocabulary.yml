@@ -1,0 +1,93 @@
+generated: '2026-08-19'
+method: derived
+source: >-
+  Princeton-operated surfaces probed 2026-08-19 — allsearch-api.princeton.edu,
+  data.artmuseum.princeton.edu, figgy.princeton.edu, datacommons.princeton.edu,
+  idp.princeton.edu, api.princeton.edu — plus the pulibrary GitHub organisation.
+x-operator: institution
+vocabulary:
+  name: Princeton University Programmable Surface Vocabulary
+  description: >-
+    The terms a developer needs in order to read Princeton's programmable footprint correctly.
+    Almost all of it belongs to one organisational unit — Princeton University Library — and the
+    naming is theirs, not a sector-standard vocabulary.
+  version: '2026-08-19'
+  terms:
+  - term: Allsearch
+    definition: >-
+      Princeton University Library's federated search front end at allsearch.princeton.edu,
+      backed by a public JSON API at allsearch-api.princeton.edu. One uniform envelope
+      (number / records / more) fans out across fourteen targets: the catalog, articles, the
+      Art Museum, digital collections, finding aids, journals, databases, LibGuides,
+      LibAnswers, maps, library staff, the library website, best bets and a banner.
+    tags: [Product, Library, Search]
+  - term: Bibdata
+    definition: >-
+      "PUL Bibliographic Data Web Service" at bibdata.princeton.edu. A Princeton-written Rails
+      application (github.com/pulibrary/bibdata) that reads from Alma and re-serves bibliographic,
+      holdings and location data as JSON, plus periodic full dumps for indexing. The upstream
+      library system is Ex Libris Alma — a vendor — but this API surface is Princeton's own code.
+    tags: [Library, Metadata]
+  - term: Orangelight
+    definition: >-
+      Princeton's Blacklight-based catalog application, deployed at catalog.princeton.edu.
+      Every Blacklight route answers to a .json suffix, so catalog.princeton.edu/catalog.json
+      is a working, unauthenticated search API with a JSON:API-shaped envelope.
+    tags: [Library, Discovery, Blacklight]
+  - term: Figgy
+    definition: >-
+      PUL's Valkyrie-based digital repository backend (github.com/pulibrary/figgy). Serves IIIF
+      manifests for digitised material and exposes an OAI-PMH 2.0 endpoint at
+      figgy.princeton.edu/oai whose Identify response names "Princeton University Library".
+    tags: [Repository, IIIF, OAI-PMH]
+  - term: DPUL
+    definition: >-
+      Digital PUL — the public presentation layer for Princeton's digital collections at
+      dpul.princeton.edu, also a Blacklight application with a .json surface.
+    tags: [Discovery, Digital Collections]
+  - term: PDC / Princeton Data Commons
+    definition: >-
+      Princeton's research data repository programme, split into pdc_describe (deposit and
+      description) and pdc_discovery (the public portal at datacommons.princeton.edu/discovery).
+      Datasets are addressed by DataCite DOIs under Princeton's 10.34770 prefix. This is the
+      genuinely institution-operated answer to the research repository slot that most of this
+      cohort fills with a vendor tenancy.
+    tags: [Research Data, Repository, DataCite]
+  - term: DataSpace
+    definition: >-
+      Princeton's older DSpace-based institutional repository at dataspace.princeton.edu, holding
+      theses, dissertations and archived research output, with content migrating to Princeton Data
+      Commons. Registered with DataCite as client pu.dataspace (399 DOIs). Runs on
+      dataspace.pulcloud.io — pulcloud.io being PUL's own Google Cloud estate, per
+      pulibrary/princeton_ansible — so this is Princeton infrastructure, not a hosted tenancy.
+    tags: [Repository, DSpace, OAI-PMH]
+  - term: TigerData
+    definition: >-
+      Princeton's institutional research data storage and management service
+      (github.com/PrincetonUniversity/tigerdata-app), registered with DataCite as pu.tigerdata.
+      Web surface is behind a Cloudflare challenge to anonymous clients.
+    tags: [Research Computing, Research Data]
+  - term: Princeton API Gateway
+    definition: >-
+      The OIT enterprise gateway at api.princeton.edu, running WSO2 API Manager. Fronts
+      institutional APIs — Active Directory, PrincetonInfo departmental data, the MobileApp
+      course/dining/places feeds, LibAlma patron feeds — all requiring a NetID or service-account
+      OAuth2 subscription. The developer portal that used to front it, api-store.princeton.edu,
+      no longer resolves.
+    tags: [Gateway, Enterprise, Gated]
+  - term: NetID
+    definition: >-
+      Princeton's campus identity. It is the gate on every non-Library programmable surface, and
+      the reason Princeton's real API estate is invisible from the public internet.
+    tags: [Identity, Access]
+  - term: Tombstone
+    definition: >-
+      In the Art Museum API, the abbreviated label-level record for an object — the fields a
+      gallery wall caption carries — available at /objects/{id}/tombstone.
+    tags: [Museum, Data Model]
+  - term: ALTCHA challenge
+    definition: >-
+      The proof-of-work bot challenge PUL puts in front of some hosts, implemented in-house
+      (github.com/pulibrary/altcha_rust_server). It answers with HTTP 401 and an HTML
+      verification page, which is easily and wrongly read as an authentication requirement.
+    tags: [Access, Probe Hazard]

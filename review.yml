@@ -3,18 +3,146 @@ name: Princeton University
 description: Princeton University public developer/API footprint review for APIs.json cataloging.
 url: https://raw.githubusercontent.com/api-evangelist/princeton/refs/heads/main/review.yml
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reviews:
+  - date: '2026-08-19'
+    rating: 4
+    pipeline: university
+    summary: >-
+      Re-profiled under the API Evangelist university pipeline, which settles the operator axis
+      before saving any contract. Princeton turns out to be one of the few institutions in this
+      cohort that publishes a machine-readable contract of its own: Princeton University Library
+      serves an OpenAPI 3.1.1 document for its Allsearch API directly from the application at
+      allsearch-api.princeton.edu/api-docs/v1/swagger.yaml, with a Swagger UI beside it and the
+      application open-sourced as pulibrary/allsearch_api. Twelve institution-operated surfaces
+      were verified live, including a SAML 2.0 EntityDescriptor from Princeton's own Shibboleth
+      IdP and a valid OAI-PMH 2.0 Identify response from Figgy. Two vendor tenancies (Ex Libris
+      Alma/Primo 01PRI_INST and Canvas) were recorded as relationships, with no vendor contract
+      saved under this slug. Four errors in the 2026-06-03 review were corrected: the Allsearch
+      OpenAPI was missed, the IdP metadata and OAI-PMH endpoint were missed, api-store.princeton.edu
+      was listed as a live developer portal when it no longer resolves at all, and DataSpace's
+      HTTP 401 was described as authentication when it is Princeton's own ALTCHA bot challenge.
+      A candidate princeton.figshare.com tenancy was probed and REJECTED — a nonsense subdomain
+      returns the identical empty 202 from the same load balancer, so it is not evidence of a
+      Figshare account. No endpoints were fabricated; every claim below carries a status code.
+    endpoints:
+      - url: https://allsearch-api.princeton.edu/api-docs/v1/swagger.yaml
+        status: 200
+        note: >-
+          Princeton's only published OpenAPI. 3.1.1, 14 operations, servers[] under princeton.edu,
+          32/32 response media types carry examples. x-operator institution.
+      - url: https://allsearch-api.princeton.edu/search/catalog?query=climate
+        status: 200
+        note: Public, anonymous, no key. Uniform {number, records, more} envelope.
+      - url: https://allsearch-api.princeton.edu/search/catalog
+        status: 400
+        note: 'Named error code: {"error":{"problem":"QUERY_IS_EMPTY",...}}.'
+      - url: https://allsearch-api.princeton.edu/search/nope?query=x
+        status: 200
+        note: >-
+          Soft-200 anti-pattern — an unknown route returns the API root identity document instead
+          of a 404. Recorded in errors/princeton-errors.yml.
+      - url: https://idp.princeton.edu/idp/shibboleth
+        status: 200
+        note: >-
+          SAML 2.0 EntityDescriptor, OrganizationDisplayName "Princeton University", IAM and OIT
+          contacts, Shibboleth 1.0 + SAML 1.1 + SAML 2.0 protocol support. IdentityFederation —
+          a real find, and not previously catalogued.
+      - url: https://figgy.princeton.edu/oai?verb=Identify
+        status: 200
+        note: >-
+          Valid OAI-PMH 2.0 Identify. repositoryName "Princeton University Library",
+          earliestDatestamp 2017-10-06. Verified oai-pmh conformance.
+      - url: https://catalog.princeton.edu/catalog.json?q=climate
+        status: 200
+        note: Orangelight (Blacklight) JSON search API, 269KB response, anonymous.
+      - url: https://bibdata.princeton.edu/locations/libraries.json
+        status: 200
+        note: PUL Bibliographic Data Web Service; prints its own deployed commit and index timestamps.
+      - url: https://datacommons.princeton.edu/discovery/catalog.json?q=data
+        status: 200
+        note: >-
+          Princeton Data Commons discovery JSON. Institution-operated research data repository —
+          the slot most of this cohort fills with a vendor tenancy. DataCite DOIs under 10.34770.
+      - url: https://findingaids.princeton.edu/catalog.json?q=papers
+        status: 200
+        note: PULFAlight (ArcLight) archival finding aids JSON.
+      - url: https://maps.princeton.edu/catalog.json?q=princeton
+        status: 200
+        note: PUL Map (GeoBlacklight) geospatial catalog JSON.
+      - url: https://dpul.princeton.edu/catalog.json?q=map
+        status: 200
+        note: Digital PUL collections JSON.
+      - url: https://data.artmuseum.princeton.edu/objects/9449
+        status: 200
+        note: Art Museum object record, open and unauthenticated.
+      - url: https://data.artmuseum.princeton.edu/objects/9449/tombstone
+        status: 200
+        note: Label-level tombstone record.
+      - url: https://data.artmuseum.princeton.edu/objects?size=1
+        status: 400
+        note: Plain-text "Bad Request" — no machine-readable error code on this surface.
+      - url: https://api.princeton.edu/active-directory/1.0.6/users
+        status: 401
+        note: >-
+          OIT gateway rejects anonymous calls with an empty body. This is a REAL institutional
+          gate, not a block on us.
+      - url: https://api.princeton.edu/registrar/course-offerings
+        status: 404
+        note: >-
+          WSO2 am:fault envelope — the gateway is live and this path is not published publicly.
+          Confirms the platform (WSO2 API Manager) without inventing an endpoint.
+      - url: https://api-store.princeton.edu/store/
+        status: 0
+        note: >-
+          NXDOMAIN. The developer portal recorded as live in the 2026-06-03 review no longer
+          exists. Pointer removed from apis.yml.
+      - url: https://dataspace.princeton.edu/server/oai/request?verb=Identify
+        status: 401
+        note: >-
+          Princeton's own ALTCHA proof-of-work bot challenge (pulibrary/altcha_rust_server), NOT
+          an authentication requirement. The 2026-06-03 note was wrong. Host CNAMEs to
+          dataspace.pulcloud.io — PUL's own GCP estate — so this is institution, not tenant.
+      - url: https://api.datacite.org/clients?query=princeton
+        status: 200
+        note: >-
+          Three Princeton DataCite clients — pu.dataspace (399 DOIs, prefix 10.34770),
+          pu.tigerdata, pu.openpublishing. Verified datacite conformance.
+      - url: https://princeton.primo.exlibrisgroup.com/
+        status: 200
+        note: Ex Libris Primo VE tenancy (01PRI_INST). x-operator tenant; no vendor spec saved.
+      - url: https://princeton.instructure.com/
+        status: 403
+        note: Canvas LMS tenancy behind Cloudflare. x-operator tenant; no vendor spec saved.
+      - url: https://princeton.figshare.com/
+        status: 202
+        note: >-
+          NEGATIVE PROBE. Returns an empty 202 from awselb/2.0 — and so does
+          nosuchschool-xyz123.figshare.com. Wildcard load-balancer response, not a Princeton
+          Figshare tenancy. Not recorded.
+      - url: https://ai.princeton.edu/
+        status: 403
+        note: >-
+          Cloudflare JS interstitial. Identical 14,687-byte body served to every non-browser
+          client on library./oit./ai./researchcomputing.princeton.edu, even with full browser
+          headers. LIVE but unreadable to us, so no AIPolicy pointer is emitted.
+      - url: https://www.princeton.edu/privacy-notice
+        status: 200
+        note: Institutional privacy notice. No institution-wide terms of use page was found.
+      - url: https://www.princeton.edu/llms.txt
+        status: 404
+        note: No llms.txt on the institutional host.
   - date: '2026-06-03'
     rating: 2
     summary: >-
-      Verified live the Princeton University Art Museum API (open, no-auth REST,
-      objects/search returned 200) and its GitHub-hosted docs. The OIT API Store
-      (ActiveDirectory, PrincetonInfo, MobileApp) is documented but gated behind
-      NetID/service-account OAuth2 and not reachable from the public internet
-      (connection refused). DataSpace exposes an OAI-PMH endpoint that exists but
-      requires auth (401). No fabricated endpoints; gated and dead URLs noted as
-      probed.
+      Verified live the Princeton University Art Museum API (open, no-auth REST, objects/search
+      returned 200) and its GitHub-hosted docs. The OIT API Store (ActiveDirectory, PrincetonInfo,
+      MobileApp) is documented but gated behind NetID/service-account OAuth2 and not reachable
+      from the public internet (connection refused). DataSpace exposes an OAI-PMH endpoint that
+      exists but requires auth (401). No fabricated endpoints; gated and dead URLs noted as probed.
+      SUPERSEDED by the 2026-08-19 university-pipeline review — this pass missed Princeton's
+      published OpenAPI and its identity-federation and OAI-PMH surfaces, and it misread the
+      DataSpace 401.
     endpoints:
       - url: https://data.artmuseum.princeton.edu/objects/32221
         status: 200

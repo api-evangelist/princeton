@@ -3,9 +3,7 @@ info:
   title: Princeton University Art Museum Makers API
   version: '1.0'
   summary: Open, no-authentication REST access to the Princeton University Art Museum collections.
-  description: 'REST-style service providing developer access to data about the Princeton University Art Museum and its collections. Four resource surfaces are documented: objects (art objects and their tombstone records), makers (artists, cultural groups and other makers), packages (curated groupings) and a full-text search endpoint backed by Elasticsearch. All responses are JSON. No authentication is currently required, though the Museum notes this may change.
-
-    PROVENANCE: the Museum publishes prose documentation in a GitHub repository, not a machine readable contract. This OpenAPI was DERIVED by API Evangelist from that documentation and verified against live responses on 2026-08-19; it was not published by Princeton. Paths, parameters and status codes below were each exercised against the production host.'
+  description: REST-style service providing developer access to data about the Princeton University Art Museum and its collections.
   contact:
     name: Princeton University Art Museum API
     url: https://github.com/Princeton-University-Art-Museum/puam-api-docs
