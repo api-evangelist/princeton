@@ -148,43 +148,6 @@ paths:
               example: Bad Request
 components:
   schemas:
-    ObjectMaker:
-      type: object
-      properties:
-        id:
-          type: integer
-        displayname:
-          type: string
-        displaydate:
-          type:
-          - string
-          - 'null'
-        datebegin:
-          type:
-          - integer
-          - 'null'
-        dateend:
-          type:
-          - integer
-          - 'null'
-        prefix:
-          type:
-          - string
-          - 'null'
-        suffix:
-          type:
-          - string
-          - 'null'
-        role:
-          type:
-          - string
-          - 'null'
-        displaymaker:
-          type:
-          - string
-          - 'null'
-        displayorder:
-          type: integer
     ArtObject:
       type: object
       description: An art object in the Museum's collection.
@@ -282,3 +245,40 @@ components:
           type: array
           items:
             type: object
+    ObjectMaker:
+      type: object
+      properties:
+        id:
+          type: integer
+        displayname:
+          type: string
+        displaydate:
+          type:
+          - string
+          - 'null'
+        datebegin:
+          type:
+          - integer
+          - 'null'
+        dateend:
+          type:
+          - integer
+          - 'null'
+        prefix:
+          type:
+          - string
+          - 'null'
+        suffix:
+          type:
+          - string
+          - 'null'
+        role:
+          type:
+          - string
+          - 'null'
+        displaymaker:
+          type:
+          - string
+          - 'null'
+        displayorder:
+          type: integer
