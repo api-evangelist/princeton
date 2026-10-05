@@ -1,0 +1,12 @@
+{
+ "url": "https://allsearch-api.princeton.edu/api-docs/v1/swagger.yaml",
+ "requested_url": "https://allsearch-api.princeton.edu/api-docs/v1/swagger.yaml",
+ "status": 200,
+ "content_type": "text/yaml",
+ "bytes": 49829,
+ "sha256": "491d9eace74eb4f5980975bc7ff90a75ccae9f7af80815df8ebe0803018b42d0",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
