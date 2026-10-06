@@ -156,7 +156,7 @@ tags_raw:
   - Identity Federation
   - Museum
 created: '2026-06-03'
-modified: '2026-08-19'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: princeton:art-museum-api
@@ -1041,6 +1041,10 @@ apis:
   - type: Website
     url: https://allsearch.princeton.edu/
 common:
+  - url: https://www.princeton.edu/news
+    type: Blog
+  - url: https://www.princeton.edu/feed
+    type: BlogRSS
   - type: Website
     url: https://www.princeton.edu/
   - type: GitHubOrganization
