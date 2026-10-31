@@ -1,4 +1,4 @@
-# Princeton University (princeton)
+# Princeton University
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,115 +64,171 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Princeton University is a private Ivy League research university in Princeton, New Jersey. This
-repository catalogs Princeton's public developer and API footprint as an
-[APIs.json](https://apisjson.org) provider profile, re-profiled on 2026-08-19 under the API
-Evangelist **university pipeline**, which settles WHO OPERATES each surface before saving anything.
+Princeton University is a private Ivy League research university in Princeton, New Jersey. Its programmable footprint is real but almost entirely the work of one unit — Princeton University Library — and it is one of the few institutions in this cohort that operates its own machine-readable contract rather than a vendor's. The Library publishes an OpenAPI 3.1.1 document for its Allsearch API at allsearch-api.princeton.edu, serves a Swagger UI alongside it, open-sources the application behind it, and runs a family of unauthenticated Blacklight JSON endpoints across the catalog, digital collections, finding aids, maps and the Princeton Data Commons research-data portal. The Art Museum runs a separate open, no-authentication collections API documented in prose on GitHub. Princeton also operates its own Shibboleth identity provider with published SAML 2.0 metadata, an OAI-PMH 2.0 endpoint on Figgy, and DataCite DOI registration under three of its own repository clients. Everything outside the Library is gated: the OIT enterprise gateway at api.princeton.edu runs WSO2 API Manager behind NetID or service-account OAuth2, and the developer portal that used to front it, api-store.princeton.edu, no longer resolves at all. Course, registrar, dining and directory data exist as APIs but are not reachable by anyone without a Princeton credential, so no public course-catalog surface is claimed here. Princeton's teaching and library-discovery layers are vendor tenancies — Canvas and Ex Libris Alma/Primo — and are recorded as relationships, not as Princeton contracts.
 
-Princeton is one of the few institutions in this cohort that publishes a machine-readable contract
-of its own rather than a vendor's. Almost all of it is the work of Princeton University Library.
+**Areas:** University · Higher Education · Education · Ivy League · United States · New Jersey · Research Library · Research Data · Open Data · Digital Collections · Identity Federation · Museums
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/princeton/refs/heads/main/apis.yml
-- Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=princeton-api-evangelist&utm_content=repo
+## Princeton University on APIs.io
 
-## Type
+Everything profiled for Princeton University is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/princeton/](https://apis.io/providers/princeton/)** — or go straight to one of the APIs or properties below.
 
-- University / Private Research University / Provider
+### APIs (30)
 
-## Tags
+- [Princeton University Art Museum API](https://apis.io/apis/princeton/art-museum-api/) — Open, REST-style API providing developer access to data about the Princeton University Art Museum and its collections. Four surfaces: objects (with a…
+- [Princeton OIT API Gateway](https://apis.io/apis/princeton/oit-api-gateway/) — Princeton's Office of Information Technology enterprise API gateway, running WSO2 API Manager. Fronts institutional APIs — ActiveDirectory user and group…
+- [Princeton University Library Catalog (Orangelight)](https://apis.io/apis/princeton/catalog/) — Princeton's library catalog at catalog.princeton.edu, a Blacklight application the Library writes and maintains itself as pulibrary/orangelight. Every route…
+- [PUL Bibliographic Data Web Service (Bibdata)](https://apis.io/apis/princeton/bibdata/) — Princeton University Library's own bibliographic data service at bibdata.princeton.edu. A Rails application (pulibrary/bibdata) that reads from Alma and…
+- [Figgy Digital Repository — OAI-PMH and IIIF](https://apis.io/apis/princeton/figgy-oai/) — Figgy is Princeton University Library's Valkyrie-based digital repository backend (pulibrary/figgy). It serves IIIF manifests for digitised material and…
+- [Princeton Data Commons — Discovery](https://apis.io/apis/princeton/data-commons/) — Princeton's research data repository, split into pdc_describe for deposit and description and pdc_discovery for the public portal at…
+- [DataSpace Institutional Repository — OAI-PMH](https://apis.io/apis/princeton/dataspace-oai/) — DataSpace is Princeton's older DSpace-based institutional repository for theses, dissertations and archived research output, with an OAI-PMH…
+- [Princeton University Library Finding Aids (PULFAlight)](https://apis.io/apis/princeton/finding-aids/) — Archival finding aids for Princeton's special collections and the Mudd Manuscript Library, served by an ArcLight application the Library maintains as…
+- [Princeton University Library Maps and Geospatial Data (PUL Map)](https://apis.io/apis/princeton/maps/) — GeoBlacklight application at maps.princeton.edu (pulibrary/pulmap) serving Princeton's geospatial data catalog. The .json surface is anonymously readable…
+- [Digital PUL (DPUL)](https://apis.io/apis/princeton/digital-pul/) — Princeton's public digital collections site at dpul.princeton.edu (pulibrary/dpul), the presentation layer over Figgy. Blacklight .json endpoints return…
+- [Princeton Shibboleth Identity Provider — SAML 2.0 Metadata](https://apis.io/apis/princeton/shibboleth-idp/) — Princeton's campus identity provider publishes signed SAML 2.0 metadata at idp.princeton.edu/idp/shibboleth. The EntityDescriptor names Princeton…
+- [Ex Libris Alma / Primo VE — Princeton tenancy (01PRI_INST)](https://apis.io/apis/princeton/exlibris-tenancy/) — Princeton's library management and discovery layer runs on Ex Libris, with institution code 01PRI_INST: Alma at na05.alma.exlibrisgroup.com and a Primo VE…
+- [Canvas LMS — Princeton tenancy](https://apis.io/apis/princeton/canvas-tenancy/) — Princeton's learning management system is Instructure Canvas at princeton.instructure.com. The host is live behind a Cloudflare interstitial (403 to…
+- [Princeton University Article API](https://apis.io/apis/princeton/princeton-article-api/) — The Article API from Princeton University — 1 operation(s) for article.
+- [Princeton University Banner API](https://apis.io/apis/princeton/princeton-banner-api/) — The Banner API from Princeton University — 1 operation(s) for banner.
+- [Princeton University Best Bets API](https://apis.io/apis/princeton/princeton-best-bets-api/) — The Best Bets API from Princeton University — 1 operation(s) for best bets.
+- [Princeton University Catalog API](https://apis.io/apis/princeton/princeton-catalog-api/) — The Catalog API from Princeton University — 1 operation(s) for catalog.
+- [Princeton University Dpul API](https://apis.io/apis/princeton/princeton-dpul-api/) — The Dpul API from Princeton University — 1 operation(s) for dpul.
+- [Princeton University Findingaids API](https://apis.io/apis/princeton/princeton-findingaids-api/) — The Findingaids API from Princeton University — 1 operation(s) for findingaids.
+- [Princeton University Journals API](https://apis.io/apis/princeton/princeton-journals-api/) — The Journals API from Princeton University — 1 operation(s) for journals.
+- [Princeton University Libanswers API](https://apis.io/apis/princeton/princeton-libanswers-api/) — The Libanswers API from Princeton University — 1 operation(s) for libanswers.
+- [Princeton University Libguides API](https://apis.io/apis/princeton/princeton-libguides-api/) — The Libguides API from Princeton University — 1 operation(s) for libguides.
+- [Princeton University Library Databases API](https://apis.io/apis/princeton/princeton-library-databases-api/) — The Library Databases API from Princeton University — 1 operation(s) for library databases.
+- [Princeton University Library Staff API](https://apis.io/apis/princeton/princeton-library-staff-api/) — The Library Staff API from Princeton University — 1 operation(s) for library staff.
+- [Princeton University Library Website API](https://apis.io/apis/princeton/princeton-library-website-api/) — The Library Website API from Princeton University — 1 operation(s) for library website.
+- [Princeton University Makers API](https://apis.io/apis/princeton/princeton-makers-api/) — Artists, cultural groups and other makers.
+- [Princeton University Objects API](https://apis.io/apis/princeton/princeton-objects-api/) — Art objects in the Museum's collection.
+- [Princeton University Packages API](https://apis.io/apis/princeton/princeton-packages-api/) — Curated groupings of collection material.
+- [Princeton University Pulmap API](https://apis.io/apis/princeton/princeton-pulmap-api/) — The Pulmap API from Princeton University — 1 operation(s) for pulmap.
+- [Princeton University Search API](https://apis.io/apis/princeton/princeton-search-api/) — Full-text search across all collection data types.
 
-University, Higher Education, Education, Ivy League, United States, New Jersey, Research Library,
-Research Data, Open Data, Digital Collections, Identity Federation, Museum
+### Published properties
 
-## Surfaces, by operator
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Every surface carries an `x-operator`: `institution` means Princeton runs the thing the contract
-describes; `tenant` means Princeton's data on a vendor's platform, where the contract belongs to the
-vendor and is scored against the vendor.
+#### JSON Schema (3)
 
-### institution (12)
+The data models the API reads and writes.
 
-- **Princeton University Library Allsearch API** — `allsearch-api.princeton.edu`. Princeton's only
-  published OpenAPI (3.1.1), served by the application itself at `/api-docs/v1/swagger.yaml` with a
-  Swagger UI at `/api-docs`. 14 operations, all with operationId/summary/description/tags; all 32
-  response media types carry an example. Open source: https://github.com/pulibrary/allsearch_api
-- **Princeton University Art Museum API** — `data.artmuseum.princeton.edu`. Open, no-auth REST for
-  objects, makers, packages and full-text search. Prose docs only; the OpenAPI here is *derived*.
-- **Princeton OIT API Gateway** — `api.princeton.edu`. WSO2 API Manager fronting ActiveDirectory,
-  PrincetonInfo, MobileApp (course/dining/places) and LibAlma. NetID/service-account gated (401).
-- **Library Catalog (Orangelight)** — `catalog.princeton.edu/catalog.json`
-- **Bibdata** — `bibdata.princeton.edu`, PUL's own bibliographic data web service
-- **Figgy** — `figgy.princeton.edu/oai`, a verified OAI-PMH 2.0 endpoint, plus IIIF
-- **Princeton Data Commons** — `datacommons.princeton.edu/discovery`, institution-operated research
-  data repository with DataCite DOIs under Princeton's own 10.34770 prefix
-- **DataSpace** — `dataspace.princeton.edu`, DSpace repository on PUL's own cloud estate
-- **Finding Aids (PULFAlight)** — `findingaids.princeton.edu`
-- **Maps (PUL Map / GeoBlacklight)** — `maps.princeton.edu`
-- **Digital PUL** — `dpul.princeton.edu`
-- **Shibboleth Identity Provider** — `idp.princeton.edu/idp/shibboleth`, published SAML 2.0 metadata
+- [Princeton Allsearch error envelope](https://apis.io/schemas/princeton/princeton-allsearch-error/)
+- [Princeton Allsearch search response](https://apis.io/schemas/princeton/princeton-allsearch-search-response/)
+- [Princeton University Art Museum art object](https://apis.io/schemas/princeton/princeton-art-museum-object/)
 
-### tenant (2)
+#### JSON-LD (1)
 
-- **Ex Libris Alma / Primo VE** (`01PRI_INST`) — the library management and discovery layer
-- **Canvas LMS** — `princeton.instructure.com`
+Linked-data contexts for the provider's vocabulary.
 
-No vendor-operated contract is saved under this slug. `princeton.figshare.com` was probed and
-rejected: a nonsense subdomain returns the same empty 202 from the same load balancer, so there is
-no Figshare tenancy here.
+- [Princeton Context](https://apis.io/jsonld/princeton/princeton-context/)
 
-## Education-regime conformance
+#### Examples (5)
 
-Verified against machine-readable artifacts, not prose claims:
+Example requests and responses.
 
-| Standard | Evidence |
+- [Princeton Allsearch Banner 200](https://apis.io/examples/princeton/princeton-allsearch-banner-200/)
+- [Princeton Allsearch Catalog Search 200](https://apis.io/examples/princeton/princeton-allsearch-catalog-search-200/)
+- [Princeton Allsearch Empty Query 400](https://apis.io/examples/princeton/princeton-allsearch-empty-query-400/)
+- [Princeton Art Museum Maker 200](https://apis.io/examples/princeton/princeton-art-museum-maker-200/)
+- [Princeton Art Museum Tombstone 200](https://apis.io/examples/princeton/princeton-art-museum-tombstone-200/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Princeton University — openapi rules](https://apis.io/rules/princeton/princeton-openapi-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Princeton Authentication](https://apis.io/security/princeton/princeton-authentication/)
+- [Princeton Domain Security](https://apis.io/security/princeton/princeton-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Princeton Scopes](https://apis.io/scopes/princeton/princeton-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Princeton Plans Pricing](https://apis.io/plans/princeton/princeton-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Princeton Rate Limits](https://apis.io/rate-limits/princeton/princeton-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Princeton Finops](https://apis.io/finops/princeton/princeton-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.princeton.edu/)
+- [API reference](https://allsearch-api.princeton.edu/api-docs)
+- [Blog](https://www.princeton.edu/news)
+- [Privacy policy](https://www.princeton.edu/privacy-notice)
+- [GitHub](https://github.com/pulibrary)
+
+## API Evangelist rating
+
+**Kin Score 33.5** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
 |---|---|
-| `oai-pmh` | `figgy.princeton.edu/oai?verb=Identify` → 200, valid OAI-PMH 2.0 Identify |
-| `shibboleth` | `idp.princeton.edu/idp/shibboleth` → SAML EntityDescriptor with Shibboleth protocol support |
-| `saml` | Same document — SAML 1.1 + 2.0 SSO and SLO endpoints, signing/encryption keys |
-| `datacite` | Three registered DataCite clients: `pu.dataspace`, `pu.tigerdata`, `pu.openpublishing` |
-| `orcid` | `orcid.princeton.edu` (pulibrary/orcid_princeton); ORCID iDs in PDC discovery records |
+| Discoverability | 53.6 |
+| Contract quality | 49.6 |
+| Contract governance | 29.5 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 15.8 |
 
-## Artifacts
+**Agent readiness 27.8** — agent-aware
 
-- OpenAPI: [openapi/](openapi/) — plus [openapi/_original/](openapi/_original/) pristine copies
-- JSON Schema: [json-schema/](json-schema/)
-- Examples (verbatim captured responses): [examples/](examples/)
-- Conformance: [conformance/princeton-conformance.yml](conformance/princeton-conformance.yml)
-- Authentication: [authentication/princeton-authentication.yml](authentication/princeton-authentication.yml)
-- Errors: [errors/princeton-errors.yml](errors/princeton-errors.yml)
-- Scopes: [scopes/princeton-scopes.yml](scopes/princeton-scopes.yml)
-- Lifecycle: [lifecycle/princeton-lifecycle.yml](lifecycle/princeton-lifecycle.yml)
-- Spectral rules: [rules/princeton-openapi-spectral-rules.yml](rules/princeton-openapi-spectral-rules.yml)
-- Vocabulary: [vocabulary/princeton-vocabulary.yml](vocabulary/princeton-vocabulary.yml)
-- Plans: [plans/princeton-plans-pricing.yml](plans/princeton-plans-pricing.yml)
-- Rate limits: [rate-limits/princeton-rate-limits.yml](rate-limits/princeton-rate-limits.yml)
-- FinOps: [finops/princeton-finops.yml](finops/princeton-finops.yml)
-- Review: [review.yml](review.yml)
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-## What the June 2026 profile got wrong
+**Regulatory alignment 30.4** — Education & Research
 
-1. It missed the Allsearch API entirely — Princeton's only published OpenAPI.
-2. It missed the Shibboleth IdP metadata, the Figgy OAI-PMH endpoint, Bibdata, Princeton Data
-   Commons and the whole Blacklight discovery family.
-3. It listed `api-store.princeton.edu` as a live developer portal. That host no longer resolves
-   (NXDOMAIN as of 2026-08-19) and the pointer has been removed.
-4. It read DataSpace's HTTP 401 as "requires authentication". It is Princeton's own in-house ALTCHA
-   proof-of-work bot challenge (`pulibrary/altcha_rust_server`) — a client-verification gate, not an
-   auth requirement.
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/princeton/](https://apis.io/providers/princeton/).
 
-## Coverage
+## How this profile is made
 
-`covered`. Twelve institution-operated surfaces reached with real probes. Not readable: every
-Drupal-hosted `princeton.edu` marketing site (`library.`, `oit.`, `ai.`, `researchcomputing.`) sits
-behind a Cloudflare JS interstitial returning 403 to non-browser clients even with full browser
-headers, so no AIPolicy or ResearchComputing pointer is emitted; and DataSpace is behind the ALTCHA
-challenge above. Both are blocks on our side, not gaps in Princeton's publishing.
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-## Timestamps
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Princeton University: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
 
-- Created: 2026-06-03
-- Modified: 2026-08-19
+## Open an issue
 
-## Maintainers
-
-- Kin Lane — kin@apievangelist.com
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/princeton/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
